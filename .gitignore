@@ -1,4 +1,3 @@
 .DS_STORE
 nvim/.DS_STORE
-nix/flake.lock
 history.txt

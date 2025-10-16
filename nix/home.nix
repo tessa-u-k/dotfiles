@@ -18,6 +18,8 @@
     btop
     nushell
     nodejs_24
+    python313Packages.pip
+    python313Packages.pytest_7
   ];
 
   home.file = {
