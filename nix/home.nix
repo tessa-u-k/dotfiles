@@ -24,6 +24,7 @@
   home.file = {
     ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
     ".config/nushell".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nushell";
+    ".gitconfig".source = "${config.home.homeDirectory}/dotfiles/github/.gitconfig";
   };
   
   programs.home-manager.enable = true;
