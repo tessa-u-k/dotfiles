@@ -19,6 +19,23 @@
 source ~/.config/nu/azu.nu
 alias fetch = hyfetch
 alias vim = nvim
-def lixbuild [] { git diff ; sudo darwin-rebuild switch --flake ~/dotfiles/nix/flake.nix }
 $env.config.buffer_editor = "nvim"
 $env.config.show_banner = false 
+
+
+def lixbuild [action: string = "switch"] {
+    # Build the new system
+    sudo darwin-rebuild build
+    
+    # Show the diff between current and new system
+    nix store diff-closures /run/current-system ./result
+    
+    # Ask for confirmation
+    let response = (input "Apply these changes? (y/n): ")
+    
+    if $response == "y" {
+        sudo darwin-rebuild $action
+    } else {
+        print "Rebuild cancelled"
+    }
+}
