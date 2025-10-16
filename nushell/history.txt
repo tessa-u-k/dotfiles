@@ -1,6 +1,0 @@
-config nu
-cd ..
-git push
-git commit -am "add nushell"
-git push
-git add .
