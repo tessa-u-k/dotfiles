@@ -42,6 +42,7 @@
         "iterm2"
         "runelite"
         "steam"
+        "mullvad-vpn"
       ];
       services.trezord.enable = true;
       services.tailscale.enable = true;
