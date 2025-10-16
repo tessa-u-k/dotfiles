@@ -18,14 +18,56 @@
     btop
     nushell
     nodejs_24
-];
-
+  ];
 
   home.file = {
-    ".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
-    ".config/nushell".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nushell";
-    ".gitconfig".source = "${config.home.homeDirectory}/dotfiles/github/.gitconfig";
+    ".config/nvim" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
+      recursive = true;
+    };
+    ".config/nushell" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nushell";
+      recursive = true;
+    };
   };
-  
-  programs.home-manager.enable = true;
+
+  programs.git = {
+    enable = true;
+    userName = "angel";
+    userEmail = "angel@klbr.mom";
+    
+    aliases = {
+      rm = ''
+        !f() {
+          if [ ! -d .git/removed ]; then
+            mkdir -p .git/removed;
+          fi;
+          for file in "$@"; do
+            if [ -e "$file" ]; then
+              timestamp=$(date +%Y%m%d_%H%M%S);
+              mv "$file" ".git/removed/''${file##*/}_''${timestamp}";
+              echo "Moved $file to .git/removed/''${file##*/}_''${timestamp}";
+            fi;
+          done;
+          git rm --cached "$@";
+        }; f
+      '';
+    };
+    
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+      pull = {
+        rebase = false;
+      };
+      push = {
+        autoSetupRemote = true;
+      };
+      core = {
+        autocrlf = "input";
+        editor = "nano";
+      };
+    };
+  };
 }

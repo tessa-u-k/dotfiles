@@ -1,0 +1,33 @@
+[user]
+	name = angel
+	email = angel@klbr.mom
+
+[alias]
+	# Safe "remove" - moves files to .git/removed/ instead of deleting
+	rm = "!f() { \
+		if [ ! -d .git/removed ]; then \
+			mkdir -p .git/removed; \
+		fi; \
+		for file in \"$@\"; do \
+			if [ -e \"$file\" ]; then \
+				timestamp=$(date +%Y%m%d_%H%M%S); \
+				mv \"$file\" \".git/removed/${file##*/}_${timestamp}\"; \
+				echo \"Moved $file to .git/removed/${file##*/}_${timestamp}\"; \
+			fi; \
+		done; \
+		git rm --cached \"$@\"; \
+	}; f"
+
+[core]
+	# Prevent accidental data loss
+	editor = nano
+	autocrlf = input
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = false
+
+[push]
+	autoSetupRemote = true
