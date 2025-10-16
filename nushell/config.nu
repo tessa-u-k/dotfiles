@@ -16,7 +16,7 @@
 # You can also pretty-print and page through the documentation for configuration
 # options using:
 #     config nu --doc | nu-highlight | less -R
-source ~/.config/nu/azu.nu
+source ~/.config/nushell/azu.nu
 alias fetch = hyfetch
 alias vim = nvim
 $env.config.buffer_editor = "nvim"
