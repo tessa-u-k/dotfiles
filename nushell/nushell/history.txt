@@ -1,8 +1,0 @@
-nvim dotfiles/nushell/config.nu
-ls
-nvim dotfiles/nushell/config.nu
-ls
-echo $env.XDG_CONFIG_HOME
-vim .config/nushell/config.nu
-vim .zshrc
-exit
