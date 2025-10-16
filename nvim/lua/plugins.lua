@@ -35,6 +35,6 @@ return require('packer').startup(function(use)
     use({'hrsh7th/nvim-cmp'})
     use({'hrsh7th/cmp-nvim-lsp'})
 
-    use({'huggingface/llm.nvim'})
+    -- use({'huggingface/llm.nvim'})
 
 end)

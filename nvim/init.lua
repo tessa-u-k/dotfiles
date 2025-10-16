@@ -29,4 +29,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
         end
     end,
 })
+local undodir = vim.fn.stdpath('data') .. '/undo'
+if vim.fn.isdirectory(undodir) == 0 then
+    vim.fn.mkdir(undodir, 'p')
+end
+
+vim.opt.undofile = true
+vim.opt.undodir = undodir
 print("hiiii")

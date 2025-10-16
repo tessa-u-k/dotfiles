@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>t", vim.cmd.NvimTreeToggle)
-vim.keymap.set("n", "<leader>ft", vim.cmd.FloatermNew)
+vim.keymap.set("n", "<leader>ft", vim.cmd.FloatermToggle)
 -- tabs :)
 vim.keymap.set("n", "<leader>l", vim.cmd.BufferLineCycleNext)
 vim.keymap.set("n", "<leader>h", vim.cmd.BufferLineCyclePrev)

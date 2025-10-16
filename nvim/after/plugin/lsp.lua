@@ -16,7 +16,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'LSP actions',
   callback = function(event)
     local opts = {buffer = event.buf}
-
     vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
     vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
     vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
@@ -30,20 +29,31 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
--- These are just examples. Replace them with the language
--- servers you have installed in your system
-require('lspconfig').gleam.setup({})
-require('lspconfig').rust_analyzer.setup({})
+-- Use the new vim.lsp.config API for Neovim 0.11+
+vim.lsp.config('gleam', {
+  cmd = {'gleam', 'lsp'},
+  root_markers = {'gleam.toml'},
+  capabilities = lspconfig_defaults.capabilities,
+})
 
+vim.lsp.config('rust_analyzer', {
+  cmd = {'rust-analyzer'},
+  root_markers = {'Cargo.toml'},
+  capabilities = lspconfig_defaults.capabilities,
+})
+
+-- Enable the language servers
+vim.lsp.enable('gleam')
+vim.lsp.enable('rust_analyzer')
+
+-- CMP setup remains the same
 local cmp = require('cmp')
-
 cmp.setup({
   sources = {
     {name = 'nvim_lsp'},
   },
   snippet = {
     expand = function(args)
-      -- You need Neovim v0.10 to use vim.snippet
       vim.snippet.expand(args.body)
     end,
   },
