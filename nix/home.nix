@@ -5,6 +5,7 @@
   
   home.packages = with pkgs; [
     ghostty-bin
+    git 
     mpv
     yt-dlp
     ffmpeg

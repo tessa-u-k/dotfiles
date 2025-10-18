@@ -22,27 +22,20 @@ alias vim = nvim
 $env.config.buffer_editor = "nvim"
 $env.config.show_banner = false 
 
-def lixbuild [action: string = "switch"] {
+def lix [action: string = "switch"] {
     let original_dir = $env.PWD
     cd ($env.HOME | path join "dotfiles" "nix")
-    
-    # Build the new system
     sudo darwin-rebuild build
-    
-    # Show the diff and get confirmation
     nix store diff-closures /run/current-system ./result
-    let response = (input "Apply these changes? (y/n): ")
-    
-    if $response == "y" {
+    let response = (input "apply above? (Y/n): ")
+    if $response == "y" or $response == "Y" or $response == "" {
         sudo darwin-rebuild $action
-        
         # Commit any changes (like flake.lock updates)
         let git_status = (git status --porcelain | str trim)
         if ($git_status | is-not-empty) {
             git add .
             git commit -m "Auto-commit after rebuild"
         }
-        
         print "System updated successfully!"
     } else {
         print "Rebuild cancelled"
