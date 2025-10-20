@@ -6,7 +6,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
-
+vim.o.mouse = 'a'
 
 local function is_modified_buffer_open(buffers)
     for _, v in pairs(buffers) do

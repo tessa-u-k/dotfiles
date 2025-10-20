@@ -1,26 +1,20 @@
-# home.nix
 { config, pkgs, ... }:
 {
   home.stateVersion = "25.05";
+  programs.home-manager.enable = true;
   
   home.packages = with pkgs; [
-    ghostty-bin
-    git 
-    mpv
-    yt-dlp
-    ffmpeg
-    cargo-mommy
-    rustup
     manga-tui
-    hyfetch
-    fastfetch
     p7zip
     ansible
-    btop
-    nushell
     nodejs_24
-    python313Packages.pip
-    python313Packages.pytest_7
+    tree-sitter
+    
+    # Python with packages
+    (python313.withPackages (ps: with ps; [
+      pip
+      pytest
+    ]))
   ];
 
   home.file = {
@@ -36,10 +30,10 @@
 
   programs.git = {
     enable = true;
-    userName = "angel";
-    userEmail = "angel@klbr.mom";
+    settings.user.name = "angel";
+    settings.user.email = "angel@klbr.mom";
     
-    aliases = {
+    settings.aliases = {
       rm = ''
         !f() {
           if [ ! -d .git/removed ]; then
@@ -57,7 +51,7 @@
       '';
     };
     
-    extraConfig = {
+    settings = {
       init = {
         defaultBranch = "main";
       };
@@ -72,5 +66,13 @@
         editor = "nano";
       };
     };
+  };
+
+  # Neovim with packer plugin
+  programs.neovim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      packer-nvim
+    ];
   };
 }
