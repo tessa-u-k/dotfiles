@@ -43,17 +43,17 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Enable the X11 windowing system.
   services.upower.enable = true;
-  services.fprintd.enable = true;  
   services.blueman.enable = false;
   services.libinput.enable = true;
   services.power-profiles-daemon.enable = true;
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = false;
+
   
 
+    
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -107,7 +107,7 @@
      mullvad-vpn
      signal-desktop
      vesktop
-     wofi
+     tofi
      hyprpanel
      hyprpaper
     ];
@@ -135,7 +135,6 @@
      zsh
      gcc
      git
-     adwaita-icon-theme
      kitty
   ];
   # Make sure fontconfig is enabled
