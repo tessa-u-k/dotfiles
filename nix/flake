@@ -1,0 +1,124 @@
+# flake.nix
+{
+  description = "Multi-platform Nix configuration";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
+    darwin = {
+      url = "github:lnl7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, home-manager, darwin }: {
+    # NixOS configuration (ThinkPad)
+    nixosConfigurations.pennyix = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+         ./nixos/config.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.penny = ./home.nix;
+        }
+      ];
+    };
+
+    # macOS configuration
+    darwinConfigurations.macbook = darwin.lib.darwinSystem {
+      system = "aarch64-darwin"; # Change to x86_64-darwin for Intel Mac
+      modules = [
+        ./hosts/macbook/configuration.nix
+        home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.angel = ./home.nix;
+        }
+      ];
+    };
+  };
+}
+# home.nix
+{ config, pkgs, ... }:
+{
+  home.stateVersion = "25.05";
+  
+  home.packages = with pkgs; [
+    git 
+    mpv
+    yt-dlp
+    ffmpeg
+    cargo-mommy
+    rustup
+    manga-tui
+    hyfetch
+    fastfetch
+    p7zip
+    ansible
+    btop
+    nushell
+    nodejs_24
+    python313Packages.pip
+    python313Packages.pytest_7
+    vimPlugins.packer-nvim
+  ];
+
+  home.file = {
+    ".config/nvim" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
+      recursive = true;
+    };
+    ".config/nushell" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nushell";
+      recursive = true;
+    };
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "angel";
+    userEmail = "angel@klbr.mom";
+    
+    aliases = {
+      rm = ''
+        !f() {
+          if [ ! -d .git/removed ]; then
+            mkdir -p .git/removed;
+          fi;
+          for file in "$@"; do
+            if [ -e "$file" ]; then
+              timestamp=$(date +%Y%m%d_%H%M%S);
+              mv "$file" ".git/removed/''${file##*/}_''${timestamp}";
+              echo "Moved $file to .git/removed/''${file##*/}_''${timestamp}";
+            fi;
+          done;
+          git rm --cached "$@";
+        }; f
+      '';
+    };
+    
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+      pull = {
+        rebase = false;
+      };
+      push = {
+        autoSetupRemote = true;
+      };
+      core = {
+        autocrlf = "input";
+        editor = "nano";
+      };
+    };
+  };
+}
