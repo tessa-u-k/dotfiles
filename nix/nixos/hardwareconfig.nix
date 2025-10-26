@@ -38,6 +38,29 @@
   # networking.interfaces.enp0s31f6.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp0s20f3.useDHCP = lib.mkDefault true;
 
+
+  # Enable OpenGL hardware
+  hardware.graphics.enable = true;
+
+  # Enable NVIDIA proprietary driver
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    # Enable proprietary driver modules
+    open = false;
+    # Enable kernel modesetting
+    modesetting.enable = true;
+    # Fine-grained power management (experimental, recommended for modern GPUs)
+    # powerManagement.enable = true;
+    prime = {
+		# Make sure to use the correct Bus ID values for your system!
+		intelBusId = "PCI:0:2:0";
+		nvidiaBusId = "PCI:1:0:0";
+    };
+  };
+
+  # ... other configuration options
+
+    
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = true;
   services.fwupd.enable = true;

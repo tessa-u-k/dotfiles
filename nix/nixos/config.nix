@@ -12,7 +12,6 @@
     ];
 
   # Bootloader.
-  	boot.loader.systemd-boot.enable = false;
 	boot.loader.grub.enable = true;
 	boot.loader.grub.device = "nodev";
 	boot.loader.grub.useOSProber = true;
@@ -44,7 +43,6 @@
   };
 
   services.upower.enable = true;
-  services.blueman.enable = false;
   services.libinput.enable = true;
   services.power-profiles-daemon.enable = true;
 
@@ -68,9 +66,8 @@
 	openDefaultPorts = true;
 };
 
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
+  security.pam.services.login.enableGnomeKeyring = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -133,9 +130,12 @@
      neovim 
      wget
      zsh
-     gcc
+     (gitFull.override { withLibsecret = true; })
      git
      kitty
+     gnome-keyring
+     lshw
+     nmap
   ];
   # Make sure fontconfig is enabled
   fonts.fontconfig.enable = true;
@@ -143,6 +143,8 @@
   # Add nerd-fonts.ubuntu-sans to your list of packages
   fonts.packages = with pkgs; [
     nerd-fonts.ubuntu-sans
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
   ];
 
   # Optionally, set it as your default monospace font

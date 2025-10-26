@@ -9,12 +9,27 @@
     ansible
     nodejs_24
     tree-sitter
+    emacs
+    emacsPackages.doom
+    (ripgrep.override { withPCRE2 = true; })
+    gnutls
+    fd
+    imagemagick
+    zstd
+    nodePackages.js-beautify
+    shellcheck
+    gcc
+
     
     # Python with packages
     (python313.withPackages (ps: with ps; [
       pip
       pytest
     ]))
+  ];
+  # Add Doom Emacs to PATH
+  home.sessionPath = [
+    "$HOME/.config/emacs/bin"
   ];
 
   home.file = {
