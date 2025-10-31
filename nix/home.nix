@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
   programs.home-manager.enable = true;
   
   home.packages = with pkgs; [
@@ -11,7 +11,23 @@
     tree-sitter
     zstd
     gcc
-
+    ghostty-bin
+    git
+    mpv
+    yt-dlp
+    ffmpeg
+    cargo-mommy
+    rustup
+    manga-tui
+    hyfetch
+    fastfetch
+    p7zip
+    ansible
+    btop
+    nushell
+    nodejs_24
+    gnumake
+    ollama
     
     # Python with packages
     (python313.withPackages (ps: with ps; [
