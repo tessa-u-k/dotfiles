@@ -49,6 +49,9 @@
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nushell";
       recursive = true;
     };
+    ".zshrc" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.zshrc";
+    };
   };
 
   programs.git = {
