@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" ];
@@ -14,20 +15,22 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/0b6bf05d-c836-4c2c-b937-2dabb2a30530";
+    {
+      device = "/dev/disk/by-uuid/0b6bf05d-c836-4c2c-b937-2dabb2a30530";
       fsType = "ext4";
     };
 
   boot.initrd.luks.devices."luks-f770aee4-e041-4300-8c07-cedc2baa51b2".device = "/dev/disk/by-uuid/f770aee4-e041-4300-8c07-cedc2baa51b2";
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/BA48-8DD1";
+    {
+      device = "/dev/disk/by-uuid/BA48-8DD1";
       fsType = "vfat";
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
-#  swapDevices =
- #   [ { device = "/dev/disk/by-uuid/93414de3-5904-4d40-9244-add04b242d20"; }
+  #  swapDevices =
+  #   [ { device = "/dev/disk/by-uuid/93414de3-5904-4d40-9244-add04b242d20"; }
   #  ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
@@ -52,15 +55,15 @@
     # Fine-grained power management (experimental, recommended for modern GPUs)
     # powerManagement.enable = true;
     prime = {
-		# Make sure to use the correct Bus ID values for your system!
-		intelBusId = "PCI:0:2:0";
-		nvidiaBusId = "PCI:1:0:0";
+      # Make sure to use the correct Bus ID values for your system!
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
     };
   };
 
   # ... other configuration options
 
-    
+
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = true;
   services.fwupd.enable = true;

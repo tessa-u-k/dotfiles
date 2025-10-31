@@ -51,7 +51,7 @@
       RunAtLoad = true;
       StandardOutPath = "/tmp/ollama.log";
       StandardErrorPath = "/tmp/ollama.error.log";
-      EnvironmentVariables = {};
+      EnvironmentVariables = { };
     };
   };
 

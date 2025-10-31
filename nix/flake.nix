@@ -3,12 +3,12 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     darwin = {
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +21,7 @@
       system = "x86_64-linux";
       modules = [
         ./hosts/nixos/config.nix
-        
+
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

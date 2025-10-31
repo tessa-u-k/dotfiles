@@ -7,17 +7,18 @@
 {
   nix.package = pkgs.lixPackageSets.stable.lix;
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardwareconfig.nix
     ];
 
   # Bootloader.
-	boot.loader.grub.enable = true;
-	boot.loader.grub.device = "nodev";
-	boot.loader.grub.useOSProber = true;
-	boot.loader.grub.efiSupport = true;
-	boot.loader.efi.canTouchEfiVariables = true;
-	boot.loader.efi.efiSysMountPoint = "/boot";
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "nodev";
+  boot.loader.grub.useOSProber = true;
+  boot.loader.grub.efiSupport = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
 
 
   networking.hostName = "pennyix"; # Define your hostname.
@@ -49,9 +50,7 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = false;
 
-  
 
-    
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -62,9 +61,9 @@
   services.tailscale.enable = true;
 
   services.syncthing = {
-  	enable = true;
-	openDefaultPorts = true;
-};
+    enable = true;
+    openDefaultPorts = true;
+  };
 
   security.rtkit.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
@@ -88,37 +87,37 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-     cargo-mommy
-     rustup
-     ffmpeg
-     mpv
-     yt-dlp
-     fastfetch
-     hyfetch
-     nushell
-     steam
-     transmission_4
-     btop
-     kicad
-     keepassxc
-     mullvad-vpn
-     signal-desktop
-     vesktop
-     tofi
-     hyprpanel
-     hyprpaper
+      cargo-mommy
+      rustup
+      ffmpeg
+      mpv
+      yt-dlp
+      fastfetch
+      hyfetch
+      nushell
+      steam
+      transmission_4
+      btop
+      kicad
+      keepassxc
+      mullvad-vpn
+      signal-desktop
+      vesktop
+      tofi
+      hyprpanel
+      hyprpaper
     ];
   };
-  
+
   # Install firefox.
   programs.firefox.enable = true;
 
   programs.zsh.enable = true;
 
   programs.hyprland = {
-	enable = true;
-	xwayland.enable = true;
-    withUWSM  = true;
+    enable = true;
+    xwayland.enable = true;
+    withUWSM = true;
   };
   programs.uwsm.enable = true;
   # Allow unfree packages
@@ -127,15 +126,15 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     neovim 
-     wget
-     zsh
-     (gitFull.override { withLibsecret = true; })
-     git
-     kitty
-     gnome-keyring
-     lshw
-     nmap
+    neovim
+    wget
+    zsh
+    (gitFull.override { withLibsecret = true; })
+    git
+    kitty
+    gnome-keyring
+    lshw
+    nmap
   ];
   # Make sure fontconfig is enabled
   fonts.fontconfig.enable = true;
@@ -149,17 +148,17 @@
 
   # Optionally, set it as your default monospace font
   fonts.fontconfig.defaultFonts.monospace = [
-    "UbuntuSansMono Nerd Font" 
-    ];
-    
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    "UbuntuSansMono Nerd Font"
+  ];
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-   programs.mtr.enable = true;
-   programs.gnupg.agent = {
-     enable = true;
-     enableSSHSupport = true;
-   };
+  programs.mtr.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   # List services that you want to enable:
 

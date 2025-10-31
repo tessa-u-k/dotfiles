@@ -2,7 +2,7 @@
 {
   home.stateVersion = "25.11";
   programs.home-manager.enable = true;
-  
+
   home.packages = with pkgs; [
     manga-tui
     p7zip
@@ -28,16 +28,14 @@
     nodejs_24
     gnumake
     ollama
-    
+    nixpkgs-fmt
+    nixd
+
     # Python with packages
     (python313.withPackages (ps: with ps; [
       pip
       pytest
     ]))
-  ];
-  # Add Doom Emacs to PATH
-  home.sessionPath = [
-    "$HOME/.config/emacs/bin"
   ];
 
   home.file = {
@@ -58,7 +56,7 @@
     enable = true;
     settings.user.name = "angel";
     settings.user.email = "angel@klbr.mom";
-    
+
     settings.aliases = {
       rm = ''
         !f() {
@@ -76,7 +74,7 @@
         }; f
       '';
     };
-    
+
     settings = {
       init = {
         defaultBranch = "main";
