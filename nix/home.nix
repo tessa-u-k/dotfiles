@@ -18,11 +18,9 @@
     ffmpeg
     cargo-mommy
     rustup
-    manga-tui
     hyfetch
     fastfetch
     p7zip
-    ansible
     btop
     gnumake
     ollama

@@ -37,6 +37,7 @@
     "obsidian"
     "element"
     "cursor"
+    "docker-desktop"
   ];
 
   services.trezord.enable = true;
