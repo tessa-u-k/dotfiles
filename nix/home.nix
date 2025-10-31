@@ -24,7 +24,6 @@
     p7zip
     ansible
     btop
-    nushell
     nodejs_24
     gnumake
     ollama
