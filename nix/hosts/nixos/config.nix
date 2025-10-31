@@ -5,7 +5,6 @@
 { config, pkgs, ... }:
 
 {
-  nix.package = pkgs.lixPackageSets.stable.lix;
   imports =
     [
       # Include the results of the hardware scan.

@@ -1,8 +1,5 @@
 { self, pkgs, ... }:
-{
-  # Use Lix from nixpkgs (recommended for stable)
-  nix.package = pkgs.lixPackageSets.stable.lix;
-
+{  
   environment.systemPackages = with pkgs; [
     neovim
     coreutils
