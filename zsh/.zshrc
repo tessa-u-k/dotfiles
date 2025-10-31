@@ -2,13 +2,8 @@
 # Zsh config migrated from Nushell
 # =============================
 
-# Aliases
-alias fetch="hyfetch"
-alias vim="nvim"
-
-# Editors
-export EDITOR="nvim"
-export VISUAL="nvim"
+ # Source aliases (kept in separate file)
+ [ -f "$HOME/dotfiles/zsh/.aliasrc" ] && source "$HOME/dotfiles/zsh/.aliasrc"
 
 # -------- Cross-platform Red Theme --------
 # Terminal colors (OSC 10/11/12) and prompt styling
@@ -24,24 +19,11 @@ _set_terminal_theme_red() {
   printf '\033]12;%s\007' "$cursor"
 }
 
-# Minimal cross-platform ls colors with red accents
-_set_ls_colors_red() {
-  case "$(uname -s)" in
-    Darwin)
-      export CLICOLOR=1
-      # LSCOLORS pairs: di ln so pi ex bd cd su sg tw ow
-      # Set directories (di) to bold red; leave others default
-      export LSCOLORS="Bxxxxxxxxxxxxxxxxxxx"
-      ;;
-    Linux)
-      # GNU LS_COLORS: set directories/executables in red-ish
-      export LS_COLORS="di=31:ex=31:ln=36:so=35:pi=33:bd=31:cd=31:su=37:sg=37:tw=37:ow=37"
-      ;;
-  esac
-}
+ # ls colors are configured in .zprofile for login shells
 
-# Prompt colors
+# Prompt colors and hooks
 autoload -Uz colors && colors
+autoload -Uz add-zsh-hook
 
 _git_branch() {
   command git rev-parse --abbrev-ref HEAD 2>/dev/null | sed -e 's#^HEAD$#detached#'
@@ -55,11 +37,11 @@ _prompt_red_theme() {
   local branch
   branch=$(_git_branch)
 
-  local status
+  local exit_status_part
   if [ $exit_code -eq 0 ]; then
-    status=""
+    exit_status_part=""
   else
-    status=" ${grey}[${red}${exit_code}${grey}]${reset}"
+    exit_status_part=" ${grey}[${red}${exit_code}${grey}]${reset}"
   fi
 
   local git_part=""
@@ -67,12 +49,16 @@ _prompt_red_theme() {
     git_part=" ${grey}on ${red}${branch}${reset}"
   fi
 
-  PROMPT="${red}%n@%m${reset} ${grey}in${reset} ${red}%~${reset}${git_part}${status}\n${red}❯ ${reset}"
+  PROMPT="${red}%n@%m${reset} ${grey}in${reset} ${red}%~${reset}${git_part}${exit_status_part}
+${red}❯ ${reset}"
 }
 
 _init_red_theme() {
   _set_terminal_theme_red
-  _set_ls_colors_red
+  # Only set ls colors if the helper is available (defined in .zprofile for login shells)
+  typeset -f _set_ls_colors_red >/dev/null && _set_ls_colors_red
+  # Set up precmd hook to update prompt before each command
+  add-zsh-hook precmd _prompt_red_theme
   _prompt_red_theme
 }
 
@@ -133,20 +119,3 @@ lix() {
 
   cd "$original_dir"
 }
-
-# Ensure PATH from shells like login shells persists for interactive
-export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
-
-eval "$(/opt/homebrew/bin/brew shellenv)"
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/gawk/libexec/gnubin:$PATH"
-alias cargo="cargo mommy"
-alias fetch="hyfetch"
-export XDG_CONFIG_HOME="$HOME/.config"
-export APPLE_SSH_ADD_BEHAVIOR
-exec nu

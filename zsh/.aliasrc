@@ -1,0 +1,5 @@
+# Aliases
+alias fetch="hyfetch"
+alias vim="nvim"
+alias cargo="cargo mommy"
+
