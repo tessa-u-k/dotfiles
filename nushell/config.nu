@@ -24,7 +24,7 @@ $env.config.show_banner = false
 
 def lix [action: string = "switch"] {
     let original_dir = $env.PWD
-    cd ($env.HOME | path join "dotfiles" "nix" "mac")
+    cd ($env.HOME | path join "dotfiles" "nix") 
     sudo darwin-rebuild build
     nix store diff-closures /run/current-system ./result
     let response = (input "apply above? (Y/n): ")

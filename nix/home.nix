@@ -9,15 +9,7 @@
     ansible
     nodejs_24
     tree-sitter
-    emacs
-    emacsPackages.doom
-    (ripgrep.override { withPCRE2 = true; })
-    gnutls
-    fd
-    imagemagick
     zstd
-    nodePackages.js-beautify
-    shellcheck
     gcc
 
     
