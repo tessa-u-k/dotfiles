@@ -37,7 +37,12 @@
       pytest
     ]))
   ];
-
+  programs.neovim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      packer-nvim
+    ];
+  };
   home.file = {
     ".config/nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
@@ -49,6 +54,15 @@
     };
     ".zshrc" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.zshrc";
+    };
+    ".zshenv" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.zshenv";
+    };
+    ".zprofile" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.zprofile";
+    };
+    ".aliasrc" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.aliasrc";
     };
   };
 

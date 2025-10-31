@@ -62,9 +62,9 @@
   users.users.penny = {
     name = "penny";
     home = "/Users/penny";
-    shell = pkgs.nushell;
+    shell = pkgs.zsh;
   };
-  environment.shells = [ pkgs.nushell ];
+  environment.shells = [ pkgs.zsh ];
   nix.settings.sandbox = true;
 
   system.stateVersion = 6;
