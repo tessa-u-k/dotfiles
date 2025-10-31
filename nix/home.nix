@@ -60,45 +60,8 @@
     ".aliasrc" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.aliasrc";
     };
-  };
-
-  programs.git = {
-    enable = true;
-    settings.user.name = "angel";
-    settings.user.email = "angel@klbr.mom";
-
-    settings.aliases = {
-      rm = ''
-        !f() {
-          if [ ! -d .git/removed ]; then
-            mkdir -p .git/removed;
-          fi;
-          for file in "$@"; do
-            if [ -e "$file" ]; then
-              timestamp=$(date +%Y%m%d_%H%M%S);
-              mv "$file" ".git/removed/''${file##*/}_''${timestamp}";
-              echo "Moved $file to .git/removed/''${file##*/}_''${timestamp}";
-            fi;
-          done;
-          git rm --cached "$@";
-        }; f
-      '';
-    };
-
-    settings = {
-      init = {
-        defaultBranch = "main";
-      };
-      pull = {
-        rebase = false;
-      };
-      push = {
-        autoSetupRemote = true;
-      };
-      core = {
-        autocrlf = "input";
-        editor = "nano";
-      };
+    ".gitconfig" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/git/.gitconfig";
     };
   };
 }
