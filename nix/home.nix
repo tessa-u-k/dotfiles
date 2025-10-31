@@ -24,7 +24,6 @@
     p7zip
     ansible
     btop
-    nodejs_24
     gnumake
     ollama
     nixpkgs-fmt
