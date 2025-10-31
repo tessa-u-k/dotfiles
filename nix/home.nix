@@ -33,6 +33,7 @@
       pytest
     ]))
   ];
+  
   programs.neovim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [
