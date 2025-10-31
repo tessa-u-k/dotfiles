@@ -1,4 +1,5 @@
 { self, pkgs, ... }:
+
 {  
   environment.systemPackages = with pkgs; [
     neovim
@@ -53,22 +54,21 @@
     };
   };
 
-  nix.settings.experimental-features = "nix-command flakes";
-  system.configurationRevision = self.rev or self.dirtyRev or null;
-
   system.primaryUser = "penny";
   users.users.penny = {
     name = "penny";
     home = "/Users/penny";
     shell = pkgs.zsh;
   };
-  environment.shells = [ pkgs.zsh ];
-  nix.settings.sandbox = true;
 
+  nix.settings.sandbox = true;
+  nix.settings.experimental-features = "nix-command flakes";
+  system.configurationRevision = self.rev or self.dirtyRev or null;
   system.stateVersion = 6;
   security.pam.services.sudo_local.touchIdAuth = true;
   nixpkgs.hostPlatform = "aarch64-darwin";
   networking.knownNetworkServices = [ "wifi" ];
+
 }
 
 
