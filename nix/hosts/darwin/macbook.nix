@@ -13,8 +13,7 @@
   homebrew.onActivation.upgrade = true;
   homebrew.casks = [
     "obs"
-    "google-chrome"
-    "ableton-live-suite"
+    "google-chrome"    
     "keepassxc"
     "kicad"
     "zen"
