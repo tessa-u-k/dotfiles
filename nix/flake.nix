@@ -1,4 +1,5 @@
 {
+  
   description = "Multi-platform Nix configuration";
 
   inputs = {
