@@ -12,7 +12,7 @@
     tree-sitter
     zstd
     gcc
-    ghostty-bin
+    ghostty
     git
     mpv
     yt-dlp
