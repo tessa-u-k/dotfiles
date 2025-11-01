@@ -35,6 +35,8 @@
     "element"
     "cursor"
     "docker-desktop"
+    "claude-code"
+    "trezor-suite"
   ];
 
   services.trezord.enable = true;
@@ -60,14 +62,14 @@
     shell = pkgs.zsh;
   };
 
+  security.pam.services.sudo_local.touchIdAuth = true;
+  networking.knownNetworkServices = [ "wifi" ];
+
   nix.settings.sandbox = true;
   nix.settings.experimental-features = "nix-command flakes";
   system.configurationRevision = self.rev or self.dirtyRev or null;
   system.stateVersion = 6;
-  security.pam.services.sudo_local.touchIdAuth = true;
   nixpkgs.hostPlatform = "aarch64-darwin";
-  networking.knownNetworkServices = [ "wifi" ];
-
 }
 
 

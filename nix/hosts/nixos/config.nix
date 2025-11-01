@@ -19,10 +19,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
-
   networking.hostName = "pennyix"; # Define your hostname.
-
-
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/New_York";
@@ -49,16 +46,13 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = false;
 
-
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
-
   services.tailscale.enable = true;
-
   services.syncthing = {
     enable = true;
     openDefaultPorts = true;
@@ -78,7 +72,6 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-
 
   users.users.penny = {
     isNormalUser = true;
