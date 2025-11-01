@@ -33,7 +33,7 @@
     nixosConfigurations.pennyix = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./hosts/nixos/config.nix
+        ./hosts/thinkpad/config.nix
         lix-module.nixosModules.default
         home-manager.nixosModules.home-manager
         {
