@@ -2,6 +2,7 @@
   description = "Multi-platform Nix configuration";
 
   inputs = {
+    
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     lix = {
@@ -38,7 +39,6 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.verbose = true;
           home-manager.backupFileExtension = "backup";
           home-manager.users.penny = import ./home.nix;
         }
