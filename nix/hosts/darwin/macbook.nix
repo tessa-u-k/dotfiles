@@ -63,7 +63,7 @@
   networking.knownNetworkServices = [ "wifi" ];
 
   nix.settings.sandbox = true;
-  nix.settings.experimental-features = "nix-command flakes";
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.configurationRevision = self.rev or self.dirtyRev or null;
   system.stateVersion = 6;
 }
