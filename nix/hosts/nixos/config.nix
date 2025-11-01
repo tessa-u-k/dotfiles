@@ -79,18 +79,8 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-      cargo-mommy
-      rustup
-      ffmpeg
-      mpv
-      yt-dlp
-      fastfetch
-      hyfetch
-      nushell
       steam
       transmission_4
-      btop
-      kicad
       keepassxc
       mullvad-vpn
       signal-desktop
@@ -98,6 +88,7 @@
       tofi
       hyprpanel
       hyprpaper
+      orca-slicer
     ];
   };
 
