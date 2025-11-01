@@ -2,6 +2,8 @@
   description = "Multi-platform Nix configuration";
 
   inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    
     lix = {
       url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
       flake = false;
@@ -24,19 +26,10 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, lix-module, lix }:
-    let
-      # Helper function to instantiate nixpkgs per system
-      pkgsFor = system: import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
-        };
-      };
-    in {
+  outputs = { self, nixpkgs, home-manager, darwin, lix-module, lix }: {
 
     # NixOS configuration (ThinkPad)
-    nixosConfigurations.pennyix = (pkgsFor "x86_64-linux").lib.nixosSystem {
+    nixosConfigurations.pennyix = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         ./hosts/nixos/config.nix
