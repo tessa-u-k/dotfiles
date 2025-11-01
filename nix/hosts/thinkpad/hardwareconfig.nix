@@ -46,19 +46,10 @@
   hardware.graphics.enable = true;
 
   # Enable NVIDIA proprietary driver
-  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     # Enable proprietary driver modules
-    open = false;
+    open = true;
     # Enable kernel modesetting
-    modesetting.enable = true;
-    # Fine-grained power management (experimental, recommended for modern GPUs)
-    # powerManagement.enable = true;
-    prime = {
-      # Make sure to use the correct Bus ID values for your system!
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
   };
 
   # ... other configuration options

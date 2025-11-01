@@ -18,6 +18,7 @@
   boot.loader.grub.efiSupport = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "pennyix"; # Define your hostname.
   networking.networkmanager.enable = true;
