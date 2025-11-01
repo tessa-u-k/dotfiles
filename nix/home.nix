@@ -12,7 +12,6 @@
     tree-sitter
     zstd
     gcc
-    ghostty
     git
     mpv
     yt-dlp
@@ -27,6 +26,7 @@
     ollama
     nixpkgs-fmt
     nixd
+    (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
 
     # Python with packages
     (python313.withPackages (ps: with ps; [
