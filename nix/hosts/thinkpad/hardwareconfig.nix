@@ -49,7 +49,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     # Enable proprietary driver modules
-    open = false;
+    open = true;
     # Enable kernel modesetting
     modesetting.enable = true;
     # Fine-grained power management (experimental, recommended for modern GPUs)
