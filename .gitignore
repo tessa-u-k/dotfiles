@@ -1,5 +1,5 @@
 .DS_STORE
-
+flake.lock
 result
 nvim/.DS_STORE
 history.txt
