@@ -35,6 +35,8 @@
     "element"
     "cursor"
     "docker-desktop"
+    "claude-code"
+    "trezor-suite"
   ];
 
   services.trezord.enable = true;
