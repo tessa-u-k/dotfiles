@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+
     lix = {
       url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
       flake = false;
@@ -52,13 +52,13 @@
         ({ ... }: { nixpkgs.hostPlatform = "aarch64-darwin"; })
         ({ ... }: { _module.args.self = self; })
         ./hosts/darwin/macbook.nix
+        lix-module.nixosModules.default
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.penny = import ./home.nix;
         }
-        lix-module.nixosModules.default
       ];
     };
   };
