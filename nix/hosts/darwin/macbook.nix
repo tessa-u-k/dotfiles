@@ -34,6 +34,7 @@
     "docker-desktop"
     "claude-code"
     "trezor-suite"
+    "onionshare"
   ];
 
   services.trezord.enable = true;

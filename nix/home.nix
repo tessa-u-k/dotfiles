@@ -1,11 +1,12 @@
 { config, pkgs, ... }:
 
 {
-  home.stateVersion = "25.11";
+  home.stateVersion = "25.05";
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
     manga-tui
+    wget
     p7zip
     ansible
     nodejs_24
@@ -45,10 +46,6 @@
   home.file = {
     ".config/nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
-      recursive = true;
-    };
-    ".config/nushell" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nushell";
       recursive = true;
     };
     ".zshrc" = {

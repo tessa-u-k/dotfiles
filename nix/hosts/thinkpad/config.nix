@@ -89,11 +89,9 @@
       hyprpanel
       hyprpaper
       orca-slicer
+      firefox-esr
     ];
   };
-
-  # Install firefox.
-  programs.firefox.enable = true;
 
   programs.zsh.enable = true;
 
