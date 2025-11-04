@@ -35,6 +35,7 @@
     "claude-code"
     "trezor-suite"
     "onionshare"
+    "transmission"
   ];
 
   services.trezord.enable = true;
