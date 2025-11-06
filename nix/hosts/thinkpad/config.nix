@@ -85,9 +85,6 @@
       mullvad-vpn
       signal-desktop
       vesktop
-      tofi
-      hyprpanel
-      hyprpaper
       orca-slicer
       firefox-esr
     ];
@@ -95,12 +92,12 @@
 
   programs.zsh.enable = true;
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    withUWSM = true;
-  };
-  programs.uwsm.enable = true;
+  # Enable X11 with GNOME
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  # Force X11 session (not Wayland)
+  services.xserver.displayManager.gdm.wayland = false;
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
