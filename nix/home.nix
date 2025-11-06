@@ -27,6 +27,7 @@
     ollama
     nixpkgs-fmt
     nixd
+    claude-code
     (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
 
     # Python with packages

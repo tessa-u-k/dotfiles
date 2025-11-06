@@ -20,7 +20,7 @@
 
 [core]
 	# Prevent accidental data loss
-	editor = cursor
+	editor = nvim
 	autocrlf = input
 
 [init]
