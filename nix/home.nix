@@ -27,9 +27,13 @@
     ollama
     nixpkgs-fmt
     nixd
+<<<<<<< HEAD
     zig
     gnupg
     neovim
+=======
+    claude-code
+>>>>>>> b8abae448a18adcc9afb04fbd5ae246b2d66b30f
     (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
 
     # Python with packages
