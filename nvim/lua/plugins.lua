@@ -1,40 +1,74 @@
---- This file can be loaded by calling `lua require('plugins')` from your init.vim
-  -- Simple plugins can be specified as strings
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out, "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+vim.opt.rtp:prepend(lazypath)
 
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+-- Setup lazy.nvim
+require("lazy").setup({
+  -- Telescope
+  {
+    'nvim-telescope/telescope.nvim',
+    tag = "0.1.4",
+    dependencies = { 'nvim-lua/plenary.nvim' }
+  },
 
-return require('packer').startup(function(use)
-  -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+  -- Rose Pine colorscheme
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+    config = function()
+      vim.cmd('colorscheme rose-pine')
+    end
+  },
 
-    use { 'nvim-telescope/telescope.nvim', tag="0.1.4",
-	requires = { {'nvim-lua/plenary.nvim'} }
-    }
+  -- Treesitter
+  {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate'
+  },
 
-    use({ "rose-pine/neovim", as = "rose-pine",
-	config = function()
-		vim.cmd('colorscheme rose-pine')
-	end
-    })
+  -- Nvim Tree
+  {
+    'nvim-tree/nvim-tree.lua',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+  },
 
-    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
+  -- Web devicons
+  'nvim-tree/nvim-web-devicons',
 
-    use { 'nvim-tree/nvim-tree.lua',
-         requires = { 'nvim-tree/nvim-web-devicons',},
-    }
-    use 'nvim-tree/nvim-web-devicons' 
+  -- Floaterm
+  'voldikss/vim-floaterm',
 
-    use 'voldikss/vim-floaterm'
+  -- Tmux Navigator
+  {
+    'christoomey/vim-tmux-navigator',
+    lazy = false
+  },
 
-    use { 'christoomey/vim-tmux-navigator', lazy = false }
+  -- Bufferline
+  {
+    'akinsho/bufferline.nvim',
+    dependencies = 'nvim-tree/nvim-web-devicons'
+  },
 
-    use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
+  -- LSP
+  'neovim/nvim-lspconfig',
 
-    use({'neovim/nvim-lspconfig'})
-    use({'hrsh7th/nvim-cmp'})
-    use({'hrsh7th/cmp-nvim-lsp'})
+  -- Completion
+  'hrsh7th/nvim-cmp',
+  'hrsh7th/cmp-nvim-lsp',
 
-    -- use({'huggingface/llm.nvim'})
-
-end)
+  -- Uncomment if needed
+  -- 'huggingface/llm.nvim',
+})

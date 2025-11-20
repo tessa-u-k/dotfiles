@@ -27,21 +27,20 @@
     ollama
     nixpkgs-fmt
     nixd
+    zig
+    gnupg
+    neovim
     (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
 
     # Python with packages
     (python313.withPackages (ps: with ps; [
       pip
       pytest
+      mcp
+      requests
     ]))
   ];
 
-  programs.neovim = {
-    enable = true;
-    plugins = with pkgs.vimPlugins; [
-      packer-nvim
-    ];
-  };
 
   home.file = {
     ".config/nvim" = {

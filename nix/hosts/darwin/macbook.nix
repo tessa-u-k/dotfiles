@@ -36,6 +36,10 @@
     "trezor-suite"
     "onionshare"
     "transmission"
+    "microsoft-openjdk@21"
+    "tor-browser"
+    "imaging-edge"
+    "utm"
   ];
 
   services.trezord.enable = true;

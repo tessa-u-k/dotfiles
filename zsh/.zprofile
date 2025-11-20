@@ -5,14 +5,6 @@ if [ -x /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# Prefer GNU coreutils/findutils/sed/tar/grep/gawk if installed via Homebrew (macOS)
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/gnu-tar/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/gnu-sed/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/make/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/grep/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/gawk/libexec/gnubin:$PATH"
 
 # Cross-platform red theme: set terminal and ls colors at login
 _set_terminal_theme_red() {
