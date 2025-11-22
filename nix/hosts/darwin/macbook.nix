@@ -11,7 +11,8 @@
   homebrew.enable = true;
   homebrew.onActivation.cleanup = "uninstall";
   homebrew.onActivation.upgrade = true;
-  homebrew.casks = [
+  homebrew.greedyCasks = true;
+  homebrew.casks = [ 
     "obs"
     "google-chrome"    
     "keepassxc"
@@ -43,20 +44,13 @@
     "jagex"
     "little-snitch"
   ];
+  
   homebrew.brews = [
-    "ollama"
+    {
+      name = "ollama";
+      start_service = true;
+    }
   ];
-     # Ollama user service
-  launchd.user.agents.ollama = {
-    serviceConfig = {
-      ProgramArguments = [ "${pkgs.ollama}/bin/ollama" "serve" ];
-      KeepAlive = true;
-      RunAtLoad = true;
-      StandardOutPath = "/tmp/ollama.log";
-      StandardErrorPath = "/tmp/ollama.error.log";
-      EnvironmentVariables = { };
-    };
-  };
 
 
   services.trezord.enable = true;

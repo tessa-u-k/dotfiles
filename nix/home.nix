@@ -7,6 +7,7 @@
   home.packages = with pkgs; [
     manga-tui
     wget
+    curl
     p7zip
     ansible
     nodejs_24

@@ -72,9 +72,28 @@ require("lazy").setup({
   'neovim/nvim-lspconfig',
 
   -- Completion
-  'hrsh7th/nvim-cmp',
-  'hrsh7th/cmp-nvim-lsp',
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-path',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+    },
+  },
 
-  -- Uncomment if needed
-  -- 'huggingface/llm.nvim',
+  -- Dressing (better UI for inputs)
+  'stevearc/dressing.nvim',
+
+  -- AI Assistant (Cursor-like chat window)
+  {
+    'olimorris/codecompanion.nvim',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'nvim-telescope/telescope.nvim',
+      'stevearc/dressing.nvim',
+    },
+  },
 })

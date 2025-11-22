@@ -25,9 +25,12 @@ local function only_special_buffers_open()
         if vim.api.nvim_buf_is_loaded(buf) then
             local bufname = vim.api.nvim_buf_get_name(buf)
             local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+            local filetype = vim.api.nvim_buf_get_option(buf, 'filetype')
 
-            -- Skip NvimTree and toggleterm buffers
-            if not bufname:match("NvimTree_") and buftype ~= "terminal" then
+            -- Skip NvimTree, toggleterm, and CodeCompanion buffers
+            if not bufname:match("NvimTree_")
+                and buftype ~= "terminal"
+                and filetype ~= "codecompanion" then
                 -- Check if it's a real file buffer
                 if buftype == "" and (bufname ~= "" or vim.api.nvim_buf_get_option(buf, 'modified')) then
                     normal_buffer_found = true
@@ -71,4 +74,7 @@ end
 
 vim.opt.undofile = true
 vim.opt.undodir = undodir
-print("hiiii")
+
+-- Disable hit-enter prompts
+vim.opt.cmdheight = 1
+vim.opt.shortmess:append("c")
