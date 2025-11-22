@@ -47,11 +47,6 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = false;
 
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
 
   services.tailscale.enable = true;
   services.syncthing = {
@@ -92,12 +87,10 @@
 
   programs.zsh.enable = true;
 
-  # Enable X11 with GNOME
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-  # Force X11 session (not Wayland)
-  services.xserver.displayManager.gdm.wayland = false;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
+  services.gnome.games.enable = false;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -106,7 +99,6 @@
     zsh
     (gitFull.override { withLibsecret = true; })
     git
-    kitty
     gnome-keyring
     lshw
     nmap
@@ -151,7 +143,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  nixpkgs.config.allowUnfree = false;
+  nixpkgs.config.allowUnfree = true;
   nix.settings.sandbox = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = "25.11"; # Did you read the comment?
