@@ -54,11 +54,14 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- Close Neovim when only NvimTree and toggleterm are open
-vim.api.nvim_create_autocmd("QuitPre", {
+vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
     callback = function()
-        if only_special_buffers_open() then
-            vim.cmd("qall")
-        end
+        -- Delay the check to let the buffer actually close
+        vim.defer_fn(function()
+            if only_special_buffers_open() then
+                vim.cmd("qall!")
+            end
+        end, 10)
     end,
 })
 local undodir = vim.fn.stdpath('data') .. '/undo'
