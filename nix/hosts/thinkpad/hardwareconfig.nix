@@ -44,12 +44,15 @@
 
   # Enable OpenGL hardware
   hardware.graphics.enable = true;
+  services.xserver.videoDrivers = ["nvidia"];
 
   # Enable NVIDIA proprietary driver
   hardware.nvidia = {
     # Enable proprietary driver modules
-    open = true;
+    open = false;
     # Enable kernel modesetting
+    modesetting.enable = true;
+    nvidiaSettings = true;
   };
 
   # ... other configuration options
