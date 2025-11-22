@@ -1,0 +1,9 @@
+shell-integration = zsh
+theme = Material Darker
+font-family = Fira Code
+font-family-bold = Fira Code
+font-family-italic = Fira Code
+font-family-bold-italic = Fira Code
+macos-icon = holographic
+macos-icon-ghost-color = #D41919
+font-size = 20

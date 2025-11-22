@@ -62,5 +62,9 @@
     ".gitconfig" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/git/.gitconfig";
     };
+    ".config/ghostty" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/ghostty";
+      recursive = true;
+    };
   };
 }

@@ -9,3 +9,7 @@ vim.keymap.set("n", "<leader>H", vim.cmd.BufferLineMovePrev)
 -- AI chat
 vim.keymap.set("n", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>")
 vim.keymap.set("v", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>")
+
+-- Make :q! close everything
+vim.api.nvim_create_user_command('Q', 'qall!', { bang = true })
+vim.cmd('cabbrev q! qall!')

@@ -8,6 +8,11 @@
     pkg-config
   ];
 
+
+  fonts.packages = with pkgs; [
+    fira-code
+  ];
+
   homebrew.enable = true;
   homebrew.onActivation.cleanup = "uninstall";
   homebrew.onActivation.upgrade = true;
