@@ -43,12 +43,10 @@
     "jagex"
     "little-snitch"
   ];
-
-  services.trezord.enable = true;
-  services.tailscale.enable = true;
-  services.tailscale.overrideLocalDns = true;
-
-  # Ollama user service
+  homebrew.brews = [
+    "ollama"
+  ];
+     # Ollama user service
   launchd.user.agents.ollama = {
     serviceConfig = {
       ProgramArguments = [ "${pkgs.ollama}/bin/ollama" "serve" ];
@@ -60,6 +58,10 @@
     };
   };
 
+
+  services.trezord.enable = true;
+  services.tailscale.enable = true;
+  services.tailscale.overrideLocalDns = true;
   system.primaryUser = "penny";
   users.users.penny = {
     name = "penny";
@@ -70,8 +72,10 @@
   security.pam.services.sudo_local.touchIdAuth = true;
   networking.knownNetworkServices = [ "wifi" ];
 
-  nix.settings.sandbox = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+    sandbox = "relaxed";
+  };
   system.configurationRevision = self.rev or self.dirtyRev or null;
   system.stateVersion = 6;
 }

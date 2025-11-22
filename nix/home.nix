@@ -24,7 +24,6 @@
     p7zip
     btop
     gnumake
-    ollama
     nixpkgs-fmt
     nixd
     zig

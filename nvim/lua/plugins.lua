@@ -35,7 +35,9 @@ require("lazy").setup({
   -- Treesitter
   {
     'nvim-treesitter/nvim-treesitter',
-    build = ':TSUpdate'
+    build = function()
+      require('nvim-treesitter.install').update({ with_sync = true })()
+    end,
   },
 
   -- Nvim Tree
@@ -47,8 +49,12 @@ require("lazy").setup({
   -- Web devicons
   'nvim-tree/nvim-web-devicons',
 
-  -- Floaterm
-  'voldikss/vim-floaterm',
+  -- Toggleterm
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    config = true
+  },
 
   -- Tmux Navigator
   {

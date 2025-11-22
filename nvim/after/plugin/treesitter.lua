@@ -1,3 +1,7 @@
+-- Set parser install directory to use lazy.nvim location
+local parser_install_dir = vim.fn.stdpath("data") .. "/lazy/nvim-treesitter"
+vim.opt.runtimepath:append(parser_install_dir)
+
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the four listed parsers should always be installed)
     ensure_installed = { "rust", "javascript", "typescript", "cpp", "c", "lua", "vim", "python", "latex", "gitignore", "json", "tsx", "html" },
@@ -8,6 +12,9 @@ require 'nvim-treesitter.configs'.setup {
     -- Automatically install missing parsers when entering buffer
     -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
     auto_install = false,
+
+    -- Set parser installation directory
+    parser_install_dir = parser_install_dir,
 
     highlight = {
         enable = true,

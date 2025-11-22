@@ -17,6 +17,29 @@ local function is_modified_buffer_open(buffers)
     return false
 end
 
+local function only_special_buffers_open()
+    local buffers = vim.api.nvim_list_bufs()
+    local normal_buffer_found = false
+
+    for _, buf in ipairs(buffers) do
+        if vim.api.nvim_buf_is_loaded(buf) then
+            local bufname = vim.api.nvim_buf_get_name(buf)
+            local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+
+            -- Skip NvimTree and toggleterm buffers
+            if not bufname:match("NvimTree_") and buftype ~= "terminal" then
+                -- Check if it's a real file buffer
+                if buftype == "" and (bufname ~= "" or vim.api.nvim_buf_get_option(buf, 'modified')) then
+                    normal_buffer_found = true
+                    break
+                end
+            end
+        end
+    end
+
+    return not normal_buffer_found
+end
+
 vim.api.nvim_create_autocmd("BufEnter", {
     nested = true,
     callback = function()
@@ -26,6 +49,15 @@ vim.api.nvim_create_autocmd("BufEnter", {
             and is_modified_buffer_open(vim.fn.getbufinfo({ bufmodified = 1 })) == false
         then
             vim.cmd("quit")
+        end
+    end,
+})
+
+-- Close Neovim when only NvimTree and toggleterm are open
+vim.api.nvim_create_autocmd("QuitPre", {
+    callback = function()
+        if only_special_buffers_open() then
+            vim.cmd("qall")
         end
     end,
 })
