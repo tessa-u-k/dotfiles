@@ -2,4 +2,4 @@
 alias fetch="hyfetch"
 alias vim="nvim"
 alias cargo="cargo mommy"
-
+alias wkey="gpg -o key.asc --armor --export E2BAD13B52C74AD5ECDD9D69479A4326C3C23B04"

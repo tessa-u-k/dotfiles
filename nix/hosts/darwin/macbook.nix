@@ -40,6 +40,8 @@
     "tor-browser"
     "imaging-edge"
     "utm"
+    "jagex"
+    "little-snitch"
   ];
 
   services.trezord.enable = true;
