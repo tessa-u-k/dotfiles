@@ -18,29 +18,28 @@ local function is_modified_buffer_open(buffers)
 end
 
 local function only_special_buffers_open()
-    local buffers = vim.api.nvim_list_bufs()
-    local normal_buffer_found = false
+    -- Check all visible windows instead of all loaded buffers
+    local wins = vim.api.nvim_list_wins()
 
-    for _, buf in ipairs(buffers) do
-        if vim.api.nvim_buf_is_loaded(buf) then
-            local bufname = vim.api.nvim_buf_get_name(buf)
-            local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
-            local filetype = vim.api.nvim_buf_get_option(buf, 'filetype')
+    for _, win in ipairs(wins) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        local bufname = vim.api.nvim_buf_get_name(buf)
+        local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+        local filetype = vim.api.nvim_buf_get_option(buf, 'filetype')
 
-            -- Skip NvimTree, toggleterm, and CodeCompanion buffers
-            if not bufname:match("NvimTree_")
-                and buftype ~= "terminal"
-                and filetype ~= "codecompanion" then
-                -- Check if it's a real file buffer
-                if buftype == "" and (bufname ~= "" or vim.api.nvim_buf_get_option(buf, 'modified')) then
-                    normal_buffer_found = true
-                    break
-                end
-            end
+        -- Skip special buffers
+        local is_nvim_tree = bufname:match("NvimTree_") ~= nil
+        local is_terminal = buftype == "terminal"
+        local is_codecompanion = filetype == "codecompanion"
+        local is_special = is_nvim_tree or is_terminal or is_codecompanion
+
+        -- If we find a normal buffer window (not special)
+        if not is_special and buftype == "" then
+            return false
         end
     end
 
-    return not normal_buffer_found
+    return true
 end
 
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -57,14 +56,14 @@ vim.api.nvim_create_autocmd("BufEnter", {
 })
 
 -- Close Neovim when only NvimTree and toggleterm are open
-vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout" }, {
+vim.api.nvim_create_autocmd({ "BufDelete", "BufWipeout", "WinClosed", "QuitPre" }, {
     callback = function()
-        -- Delay the check to let the buffer actually close
+        -- Delay the check to let the buffer/window actually close
         vim.defer_fn(function()
             if only_special_buffers_open() then
                 vim.cmd("qall!")
             end
-        end, 10)
+        end, 50)
     end,
 })
 local undodir = vim.fn.stdpath('data') .. '/undo'
@@ -75,6 +74,3 @@ end
 vim.opt.undofile = true
 vim.opt.undodir = undodir
 
--- Disable hit-enter prompts
-vim.opt.cmdheight = 1
-vim.opt.shortmess:append("c")

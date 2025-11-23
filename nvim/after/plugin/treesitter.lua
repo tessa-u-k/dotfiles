@@ -4,7 +4,7 @@ vim.opt.runtimepath:append(parser_install_dir)
 
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the four listed parsers should always be installed)
-    ensure_installed = { "rust", "javascript", "typescript", "cpp", "c", "lua", "vim", "python", "latex", "gitignore", "json", "tsx", "html" },
+    ensure_installed = { "rust", "javascript", "typescript", "cpp", "c", "lua", "vim", "python", "latex", "gitignore", "json", "tsx", "html", "nix" },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,

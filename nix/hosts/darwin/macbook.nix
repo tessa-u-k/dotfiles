@@ -11,6 +11,9 @@
 
   fonts.packages = with pkgs; [
     fira-code
+    open-dyslexic
+    comic-mono
+    nerd-fonts.comic-shanns-mono 
   ];
 
   homebrew.enable = true;

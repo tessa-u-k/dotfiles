@@ -1,2 +1,11 @@
 vim.opt.termguicolors = true
-require("bufferline").setup{}
+require("bufferline").setup{
+    options = {
+        offsets = {
+            {
+                filetype = "NvimTree",
+                separator = true
+            }
+        }
+    }
+}
