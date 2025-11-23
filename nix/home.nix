@@ -30,7 +30,7 @@
     zig
     gnupg
     neovim
-    (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
+    (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
 
     # Python with packages
     (python313.withPackages (ps: with ps; [
@@ -62,9 +62,21 @@
     ".gitconfig" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/git/.gitconfig";
     };
-    ".config/ghostty" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/ghostty";
-      recursive = true;
+  };
+
+  programs.ghostty = {
+    enable = true;
+    package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+    settings = {
+      shell-integration = "zsh";
+      font-family = "ComicShannsMono Nerd Font";
+      font-family-bold = "ComicShannsMono Nerd Font";
+      font-family-italic = "ComicShannsMono Nerd Font";
+      font-family-bold-italic = "ComicShannsMono Nerd Font";
+      macos-icon = "holographic";
+      macos-icon-ghost-color = "#D41919";
+      font-size = 24;
+      theme = "Black Metal (Dark Funeral)";
     };
   };
 }

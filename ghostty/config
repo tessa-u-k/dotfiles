@@ -1,8 +1,9 @@
 shell-integration = zsh
 font-family = ComicShannsMono Nerd Font
 font-family-bold = ComicShannsMono Nerd Font
-font-family-italic = ComicShannsMono Nerd Font 
+font-family-italic = ComicShannsMono Nerd Font
 font-family-bold-italic = ComicShannsMono Nerd Font
 macos-icon = holographic
 macos-icon-ghost-color = #D41919
 font-size = 24
+
