@@ -1,6 +1,8 @@
-{ self, pkgs, ... }:
+{ self, pkgs, lix, ... }:
 
-{  
+{
+  nix.package = pkgs.lix;
+
   environment.systemPackages = with pkgs; [
     neovim
     coreutils
@@ -14,42 +16,37 @@
     open-dyslexic
     comic-mono
     nerd-fonts.comic-shanns-mono 
+    atkinson-monolegible
   ];
 
   homebrew.enable = true;
   homebrew.onActivation.cleanup = "uninstall";
   homebrew.onActivation.upgrade = true;
   homebrew.greedyCasks = true;
-  homebrew.casks = [ 
+  homebrew.casks = [
     "obs"
-    "google-chrome"    
     "keepassxc"
     "zen"
-    "vesktop"
     "transmission"
     "signal"
     "prismlauncher"
     "battle-net"
     "wowup"
-    "webex"
     "splice"
-    "focusrite-control-2"
     "runelite"
-    "steam"
     "mullvad-vpn"
     "orcaslicer"
     "obsidian"
-    "docker-desktop"
     "claude-code"
     "trezor-suite"
-    "transmission"
     "localsend"
     "microsoft-openjdk@21"
     "tor-browser"
-    "imaging-edge"
-    "utm"
     "jagex"
+    "parallels"
     "little-snitch"
+    "syncthing-app"
+    "brave-browser@nightly"
   ];
   
   homebrew.brews = [

@@ -8,21 +8,10 @@
 # -------- Cross-platform Red Theme --------
 # Terminal colors (OSC 10/11/12) and prompt styling
 
-_set_terminal_theme_red() {
-  # Foreground/Background/Cursor from your Nushell theme
-  local fg="#d9e6f2"
-  local bg="#09111a"
-  local cursor="#d9e6f2"
-  # OSC sequences: 10=foreground, 11=background, 12=cursor
-  printf '\033]10;%s\007' "$fg"
-  printf '\033]11;%s\007' "$bg"
-  printf '\033]12;%s\007' "$cursor"
-}
 
  # ls colors are configured in .zprofile for login shells
 
 # Prompt colors and hooks
-autoload -Uz colors && colors
 autoload -Uz add-zsh-hook
 
 _git_branch() {

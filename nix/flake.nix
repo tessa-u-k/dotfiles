@@ -48,12 +48,10 @@
 
     # macOS configuration (MacBook Pro)
     darwinConfigurations."pennys-MacBook-Pro" = darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
       modules = [
         ({ ... }: { nixpkgs.hostPlatform = "aarch64-darwin"; })
         ({ ... }: { _module.args.self = self; })
         ./hosts/darwin/macbook.nix
-        lix-module.nixosModules.default
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;

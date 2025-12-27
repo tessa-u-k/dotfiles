@@ -30,14 +30,14 @@
     zig
     gnupg
     neovim
-    (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
+    (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
 
     # Python with packages
     (python313.withPackages (ps: with ps; [
       pip
-      pytest
       mcp
       requests
+      ultralytics
     ]))
   ];
 
@@ -64,18 +64,14 @@
     };
   };
 
-  programs.ghostty = {
+  programs.ghostty= {
     enable = true;
     package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
     settings = {
-      shell-integration = "zsh";
-      font-family = "ComicShannsMono Nerd Font";
-      font-family-bold = "ComicShannsMono Nerd Font";
-      font-family-italic = "ComicShannsMono Nerd Font";
-      font-family-bold-italic = "ComicShannsMono Nerd Font";
+      font-family = "Atkinson Hyperlegible Mono";
       macos-icon = "holographic";
       macos-icon-ghost-color = "#D41919";
-      font-size = 24;
+      font-size = 20;
       theme = "Black Metal (Dark Funeral)";
     };
   };
