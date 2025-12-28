@@ -43,6 +43,10 @@
     element-desktop
     nicotine-plus
     vesktop
+    obsidian
+    feishin
+    syncthing
+    ollama
 
     (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
 

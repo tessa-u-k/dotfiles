@@ -31,22 +31,12 @@
     "splice"
     "runelite"
     "orcaslicer"
-    "obsidian"
     "trezor-suite"
     "tor-browser"
     "little-snitch"
-    "syncthing-app"
     "jagex"
   ];
   
-  homebrew.brews = [
-    {
-      name = "ollama";
-      start_service = true;
-    }
-  ];
-
-
   services.trezord.enable = true;
   services.tailscale.enable = true;
   services.tailscale.overrideLocalDns = true;
