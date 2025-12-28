@@ -28,8 +28,22 @@
     nixpkgs-fmt
     nixd
     zig
-    gnupg
+    sequoia-sq 
     neovim
+    claude-code
+    prismlauncher
+    transmission_4-qt
+    mullvad
+    signal-desktop-bin
+    keepassxc
+    localsend
+    wireshark 
+    jdk25_headless
+    brave
+    element-desktop
+    nicotine-plus
+    vesktop
+
     (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
 
     # Python with packages

@@ -25,28 +25,18 @@
   homebrew.greedyCasks = true;
   homebrew.casks = [
     "obs"
-    "keepassxc"
     "zen"
-    "transmission"
-    "signal"
-    "prismlauncher"
     "battle-net"
     "wowup"
     "splice"
     "runelite"
-    "mullvad-vpn"
     "orcaslicer"
     "obsidian"
-    "claude-code"
     "trezor-suite"
-    "localsend"
-    "microsoft-openjdk@21"
     "tor-browser"
-    "jagex"
-    "parallels"
     "little-snitch"
     "syncthing-app"
-    "brave-browser@nightly"
+    "jagex"
   ];
   
   homebrew.brews = [
@@ -70,6 +60,7 @@
   security.pam.services.sudo_local.touchIdAuth = true;
   networking.knownNetworkServices = [ "wifi" ];
 
+  nixpkgs.config.allowUnfree = true;
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
     sandbox = "relaxed";

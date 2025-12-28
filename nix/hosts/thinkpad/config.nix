@@ -75,13 +75,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
-      transmission_4
-      keepassxc
-      mullvad-vpn
-      signal-desktop
-      vesktop
       orca-slicer
-      firefox-esr
     ];
   };
 
