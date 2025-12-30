@@ -35,6 +35,7 @@
     "tor-browser"
     "little-snitch"
     "jagex"
+    "discord"
   ];
   
   services.trezord.enable = true;
