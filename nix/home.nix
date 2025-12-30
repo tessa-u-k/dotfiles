@@ -38,7 +38,6 @@
     keepassxc
     localsend
     wireshark 
-    jdk25_headless
     brave
     element-desktop
     nicotine-plus
