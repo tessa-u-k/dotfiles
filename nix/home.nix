@@ -44,7 +44,6 @@
     vesktop
     obsidian
     feishin
-    syncthing
     ollama
 
     (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
@@ -80,6 +79,16 @@
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/git/.gitconfig";
     };
   };
+
+
+
+  services.syncthing = {
+    enable = true;
+    
+    # Optional: Customize the data directory
+    # tray.enable = true;  # Enable system tray icon (if using a GUI)
+  };
+
 
   programs.ghostty= {
     enable = true;
