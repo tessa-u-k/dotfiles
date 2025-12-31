@@ -49,10 +49,6 @@
 
 
   services.tailscale.enable = true;
-  services.syncthing = {
-    enable = true;
-    openDefaultPorts = true;
-  };
 
   security.rtkit.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
