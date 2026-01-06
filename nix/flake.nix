@@ -47,7 +47,7 @@
     };
 
     # macOS configuration (MacBook Pro)
-    darwinConfigurations."pennys-MacBook-Pro" = darwin.lib.darwinSystem {
+    darwinConfigurations."pennys-studio" = darwin.lib.darwinSystem {
       modules = [
         ({ ... }: { nixpkgs.hostPlatform = "aarch64-darwin"; })
         ({ ... }: { _module.args.self = self; })
