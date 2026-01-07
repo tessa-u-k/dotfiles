@@ -42,11 +42,11 @@
     element-desktop
     nicotine-plus
     vesktop
-    obsidian
     feishin
     ollama
 
     (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
+    (if pkgs.stdenv.isDarwin then nvtopPackages.apple else nvtopPackages.full)
 
     # Python with packages
     (python313.withPackages (ps: with ps; [
