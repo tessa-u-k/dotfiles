@@ -10,7 +10,6 @@
     curl
     p7zip
     ansible
-    nodejs_24
     tree-sitter
     zstd
     gcc
@@ -25,12 +24,8 @@
     p7zip
     btop
     gnumake
-    nixpkgs-fmt
-    nixd
-    zig
     sequoia-sq 
     neovim
-    claude-code
     prismlauncher
     transmission_4-qt
     mullvad
@@ -51,9 +46,6 @@
     # Python with packages
     (python313.withPackages (ps: with ps; [
       pip
-      mcp
-      requests
-      ultralytics
     ]))
   ];
 
