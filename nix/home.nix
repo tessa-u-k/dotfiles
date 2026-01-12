@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lix, ... }:
 
 {
   home.stateVersion = "26.05";
@@ -29,7 +29,6 @@
     prismlauncher
     transmission_4-qt
     mullvad
-    signal-desktop-bin
     keepassxc
     localsend
     wireshark 
