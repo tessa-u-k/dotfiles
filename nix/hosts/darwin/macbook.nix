@@ -1,6 +1,10 @@
 { self, pkgs, lix, ... }:
-
 {
+  imports = [./ollama.nix];
+  services.ollama = {
+    enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     neovim
     coreutils
@@ -34,6 +38,7 @@
     "little-snitch"
     "jagex"
     "discord"
+    "signal"
   ];
   
   system.primaryUser = "penny";
@@ -44,7 +49,6 @@
   };
 
   security.pam.services.sudo_local.touchIdAuth = true;
-  networking.knownNetworkServices = [ "wifi" ];
 
   nixpkgs.config.allowUnfree = false;
   nix.settings = {
