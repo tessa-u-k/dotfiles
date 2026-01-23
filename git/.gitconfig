@@ -1,6 +1,7 @@
 [user]
 	name = angel
 	email = angel@klbr.mom
+	signingkey = 8909C0E2560A59F5
 
 [alias]
 	# Safe "remove" - moves files to .git/removed/ instead of deleting
@@ -30,3 +31,5 @@
 
 [push]
 	autoSetupRemote = true
+[commit]
+	gpgsign = true
