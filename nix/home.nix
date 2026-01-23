@@ -38,6 +38,7 @@
     vesktop
     feishin
     ollama
+    newsboat
 
     (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
     (if pkgs.stdenv.isDarwin then nvtopPackages.apple else nvtopPackages.full)
@@ -52,6 +53,10 @@
   home.file = {
     ".config/nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
+      recursive = true;
+    };
+    ".newsboat"
+      source = config.lib.file.mkOutOfStoreSymLink "${config.home.homeDirectory}/dofiles/newsboat";
       recursive = true;
     };
     ".zshrc" = {
@@ -69,6 +74,10 @@
     ".gitconfig" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/git/.gitconfig";
     };
+    ".news" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/newsboat/.gitconfig";
+    };
+
   };
 
 

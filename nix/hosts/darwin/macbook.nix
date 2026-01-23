@@ -53,7 +53,7 @@
   nixpkgs.config.allowUnfree = false;
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
-    sandbox = "relaxed";
+    sandbox = false;        
   };
   system.configurationRevision = self.rev or self.dirtyRev or null;
   system.stateVersion = 6;
