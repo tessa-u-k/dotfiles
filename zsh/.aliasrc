@@ -4,4 +4,3 @@ alias vim="nvim"
 alias cargo="cargo mommy"
 alias wkey="gpg --armor --export E2BAD13B52C74AD5ECDD9D69479A4326C3C23B04"
 zim() { docker run -v ~/output:/output ghcr.io/openzim/zimit zimit --seeds "$1" --name "$2" --diskUtilization 95; }
-

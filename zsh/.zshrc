@@ -43,7 +43,6 @@ ${red}❯ ${reset}"
 }
 
 _init_red_theme() {
-  _set_terminal_theme_red
   # Only set ls colors if the helper is available (defined in .zprofile for login shells)
   typeset -f _set_ls_colors_red >/dev/null && _set_ls_colors_red
   # Set up precmd hook to update prompt before each command
