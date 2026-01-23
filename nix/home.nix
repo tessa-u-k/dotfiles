@@ -24,6 +24,7 @@
     gnumake
     sequoia-sq 
     neovim
+<<<<<<< Updated upstream
     prismlauncher
     transmission_4-qt
     mullvad
@@ -40,6 +41,10 @@
 
     (if pkgs.stdenv.isDarwin then ghostty-bin else ghostty)
     (if pkgs.stdenv.isDarwin then nvtopPackages.apple else nvtopPackages.full)
+=======
+    localsend
+    (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
+>>>>>>> Stashed changes
 
     # Python with packages
     (python313.withPackages (ps: with ps; [

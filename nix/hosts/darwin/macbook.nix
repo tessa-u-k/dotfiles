@@ -34,6 +34,11 @@
     "runelite"
     "orcaslicer"
     "trezor-suite"
+<<<<<<< Updated upstream
+=======
+    "transmission"
+    "microsoft-openjdk@21"
+>>>>>>> Stashed changes
     "tor-browser"
     "little-snitch"
     "jagex"

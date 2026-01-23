@@ -89,6 +89,7 @@ require("lazy").setup({
   -- AI Assistant (Cursor-like chat window)
   {
     'olimorris/codecompanion.nvim',
+    version = "17.33.0",
     dependencies = {
       'nvim-lua/plenary.nvim',
       'nvim-treesitter/nvim-treesitter',
@@ -101,4 +102,4 @@ require("lazy").setup({
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' }
   }
-})
+}
