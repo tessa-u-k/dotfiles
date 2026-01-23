@@ -22,7 +22,7 @@
     fastfetch
     btop
     gnumake
-    sequoia-sq 
+    gnupg 
     neovim
     prismlauncher
     transmission_4-qt
