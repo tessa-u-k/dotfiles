@@ -55,7 +55,7 @@
       recursive = true;
     };
     ".newsboat" = {
-      source = config.lib.file.mkOutOfStoreSymLink "${config.home.homeDirectory}/dofiles/newsboat";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dofiles/newsboat";
       recursive = true;
     };
     ".zshrc" = {
