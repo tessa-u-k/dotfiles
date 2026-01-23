@@ -48,7 +48,7 @@
   hardware.bluetooth.powerOnBoot = false;
 
 
-  services.tailscale.enable = true;
+  services.tailscale.enable = false;
 
   security.rtkit.enable = true;
   security.pam.services.login.enableGnomeKeyring = true;
@@ -86,9 +86,6 @@
   environment.systemPackages = with pkgs; [
     neovim
     wget
-    zsh
-    (gitFull.override { withLibsecret = true; })
-    git
     gnome-keyring
     lshw
     nmap
@@ -133,7 +130,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  nixpkgs.config.allowUnfree = false;
+  nixpkgs.config.allowUnfree = true;
   nix.settings.sandbox = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   system.stateVersion = "26.05"; # Did you read the comment?

@@ -9,7 +9,6 @@
     wget
     curl
     p7zip
-    ansible
     tree-sitter
     zstd
     gcc
@@ -21,7 +20,6 @@
     rustup
     hyfetch
     fastfetch
-    p7zip
     btop
     gnumake
     sequoia-sq 
@@ -55,7 +53,7 @@
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
       recursive = true;
     };
-    ".newsboat"
+    ".newsboat" = {
       source = config.lib.file.mkOutOfStoreSymLink "${config.home.homeDirectory}/dofiles/newsboat";
       recursive = true;
     };
