@@ -90,8 +90,8 @@
 
 
   programs.ghostty= {
-    enable = true;
-    package = if pkgs.stdenv.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+    enable = (if pkgs.stdenv.isDarwin then false else true);
+    package = pkgs.ghostty;
     settings = {
       font-family = "Atkinson Hyperlegible Mono";
       macos-icon = "holographic";
