@@ -5,19 +5,15 @@
     enable = true;
   };
 
-  nix.package = pkgs.lixPackageSets.stable.lix;
   environment.systemPackages = with pkgs; [
     neovim
     coreutils
-    python313
     pkg-config
   ];
 
 
   fonts.packages = with pkgs; [
     fira-code
-    open-dyslexic
-    comic-mono
     nerd-fonts.comic-shanns-mono 
     atkinson-monolegible
   ];
@@ -36,7 +32,6 @@
     "orcaslicer"
     "trezor-suite"
     "transmission"
-    "microsoft-openjdk@21"
     "tor-browser"
     "little-snitch"
     "discord"
@@ -56,7 +51,7 @@
   nixpkgs.config.allowUnfree = false;
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
-    sandbox = false;        
+    sandbox = true;        
   };
   system.configurationRevision = self.rev or self.dirtyRev or null;
   system.stateVersion = 6;

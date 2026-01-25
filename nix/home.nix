@@ -37,6 +37,7 @@
     feishin
     ollama
     newsboat
+    javaPackages.compiler.openjdk17-bootstrap
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
     (if pkgs.stdenv.isDarwin then nvtopPackages.apple else nvtopPackages.full)
@@ -83,9 +84,6 @@
 
   services.syncthing = {
     enable = true;
-    
-    # Optional: Customize the data directory
-    # tray.enable = true;  # Enable system tray icon (if using a GUI)
   };
 
 
