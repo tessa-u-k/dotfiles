@@ -5,6 +5,8 @@
     enable = true;
   };
 
+  nix.package = pkgs.lixPackageSets.stable.lix;
+
   environment.systemPackages = with pkgs; [
     neovim
     coreutils
