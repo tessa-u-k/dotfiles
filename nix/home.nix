@@ -34,7 +34,6 @@
     brave
     element-desktop
     nicotine-plus
-    vesktop
     feishin
     ollama
     newsboat
