@@ -13,6 +13,7 @@
     zstd
     gcc
     git
+    reaper
     mpv
     yt-dlp
     ffmpeg
@@ -37,7 +38,9 @@
     feishin
     ollama
     newsboat
-    javaPackages.compiler.openjdk17-bootstrap
+    signal-desktop
+    temurin-jre-bin
+    
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
     (if pkgs.stdenv.isDarwin then nvtopPackages.apple else nvtopPackages.full)

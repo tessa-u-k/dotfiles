@@ -15,7 +15,7 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.useOSProber = true;
-  boot.loader.grub.efiSupport = true;
+  boot.loader.grub.efiSupport = false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -72,12 +72,18 @@
     shell = pkgs.zsh;
     packages = with pkgs; [
       orca-slicer
+      qFlipper
+      lutris
+      wine64
+      protonup-qt
+      wineWowPackages.waylandFull
+      winetricks
     ];
   };
 
   programs.zsh.enable = true;
 
-  services.displayManager.gdm.enable = true;
+  services.displayManager.ly.enable = true;
   services.desktopManager.gnome.enable = true;
   services.gnome.games.enable = false;
 
@@ -89,6 +95,7 @@
     gnome-keyring
     lshw
     nmap
+    os-prober
   ];
   # Make sure fontconfig is enabled
   fonts.fontconfig.enable = true;
@@ -116,10 +123,10 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh.enable = false;
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
+  #  networking.firewall.allowedTCPPorts = [  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
