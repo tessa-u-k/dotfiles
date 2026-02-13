@@ -1,12 +1,7 @@
 { self, pkgs, lix, ... }:
 {
-  imports = [./ollama.nix];
-  services.ollama = {
-    enable = true;
-  };
 
   nix.package = pkgs.lixPackageSets.stable.lix;
-
   environment.systemPackages = with pkgs; [
     neovim
     coreutils
@@ -36,7 +31,6 @@
     "transmission"
     "tor-browser"
     "little-snitch"
-    "discord"
     "signal"
     "obsidian"
   ];
