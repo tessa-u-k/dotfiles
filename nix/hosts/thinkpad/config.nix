@@ -78,6 +78,7 @@
       protonup-qt
       wineWowPackages.waylandFull
       winetricks
+      binaryninja-free
     ];
   };
 

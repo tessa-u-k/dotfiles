@@ -13,7 +13,6 @@
     zstd
     gcc
     git
-    reaper
     mpv
     yt-dlp
     ffmpeg
