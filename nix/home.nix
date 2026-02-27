@@ -36,14 +36,10 @@
     feishin
     ollama
     newsboat
-<<<<<<< HEAD
-    javaPackages.compiler.openjdk17-bootstrap
     jetbrains.idea-oss
-=======
     signal-desktop
     temurin-jre-bin
     
->>>>>>> 981eea0bb9c838be065a5fe79c7bdc50ee0ef179
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
     (if pkgs.stdenv.isDarwin then nvtopPackages.apple else nvtopPackages.full)
