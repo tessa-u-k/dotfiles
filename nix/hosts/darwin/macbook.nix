@@ -33,6 +33,7 @@
     "little-snitch"
     "signal"
     "obsidian"
+    "discord"
   ];
   
   system.primaryUser = "penny";

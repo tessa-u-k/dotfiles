@@ -37,6 +37,7 @@
     ollama
     newsboat
     javaPackages.compiler.openjdk17-bootstrap
+    jetbrains.idea-oss
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
     (if pkgs.stdenv.isDarwin then nvtopPackages.apple else nvtopPackages.full)
