@@ -31,7 +31,6 @@
     "transmission"
     "tor-browser"
     "little-snitch"
-    "signal"
     "obsidian"
     "discord"
   ];
