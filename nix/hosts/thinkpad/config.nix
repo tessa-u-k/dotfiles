@@ -78,7 +78,6 @@
       protonup-qt
       wineWowPackages.waylandFull
       winetricks
-      signal-deskstop
     ];
   };
 
