@@ -36,8 +36,6 @@
     feishin
     ollama
     newsboat
-    jetbrains.idea-oss
-    signal-desktop
     temurin-jre-bin
     vesktop
     claude-code
