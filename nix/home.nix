@@ -39,7 +39,10 @@
     jetbrains.idea-oss
     signal-desktop
     temurin-jre-bin
-    
+    vesktop
+    claude-code
+
+
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
     (if pkgs.stdenv.isDarwin then nvtopPackages.apple else nvtopPackages.full)

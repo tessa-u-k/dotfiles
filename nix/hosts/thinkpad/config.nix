@@ -91,6 +91,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
+    gnome-tweaks
     wget
     gnome-keyring
     lshw
@@ -111,7 +112,22 @@
   fonts.fontconfig.defaultFonts.monospace = [
     "UbuntuSansMono Nerd Font"
   ];
+  services = {
+  tor = {
+    enable = true;
+    client.dns.enable = true;
+    settings.DNSPort = [{
+      addr = "127.0.0.1";
+      port = 53;
+    }];
+  };
+  resolved = {
+    enable = true; # For caching DNS requests.
+    fallbackDns = [ "" ]; # Overwrite compiled-in fallback DNS servers.
+  };
+};
 
+networking.nameservers = [ "127.0.0.1" ];
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
