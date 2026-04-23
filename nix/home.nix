@@ -25,7 +25,7 @@
     gnupg 
     neovim
     prismlauncher
-    transmission_4-qt
+    qbittorrent
     mullvad
     keepassxc
     localsend
@@ -37,9 +37,7 @@
     ollama
     newsboat
     temurin-jre-bin
-    vesktop
-    claude-code
-
+    sdrpp
 
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
