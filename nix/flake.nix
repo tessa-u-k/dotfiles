@@ -1,8 +1,8 @@
 {
-  
   description = "Multi-platform Nix configuration";
 
   inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     lix = {
       url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
@@ -26,40 +26,54 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, lix-module, lix }: {
+  outputs =
+    { self
+    , nixpkgs
+    , home-manager
+    , darwin
+    , lix-module
+    , lix
+    , ...
+    }:
 
-    # NixOS configuration (ThinkPad)
-    nixosConfigurations.pennyix = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./hosts/thinkpad/config.nix
-        lix-module.nixosModules.default
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.backupFileExtension = "backup";
-          home-manager.users.penny = import ./home.nix;
-        }
-      ];
+    {
+      nixosConfigurations.pennyix = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          ./hosts/thinkpad/config.nix
+
+          lix-module.nixosModules.default
+
+          home-manager.nixosModules.home-manager
+
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+
+            home-manager.users.penny = import ./home.nix;
+          }
+        ];
+      };
+
+      darwinConfigurations."pennys-studio" = darwin.lib.darwinSystem {
+        modules = [
+          { nixpkgs.hostPlatform = "aarch64-darwin"; }
+
+          { _module.args.self = self; }
+
+          ./hosts/darwin/macbook.nix
+
+          home-manager.darwinModules.home-manager
+
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            home-manager.users.penny = import ./home.nix;
+          }
+        ];
+      };
     };
-
-    # macOS configuration (MacBook Pro)
-    darwinConfigurations."pennys-studio" = darwin.lib.darwinSystem {
-      modules = [
-        ({ ... }: { nixpkgs.hostPlatform = "aarch64-darwin"; })
-        ({ ... }: { _module.args.self = self; })
-        ./hosts/darwin/macbook.nix
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.penny = import ./home.nix;
-        }
-
-
-      ];
-
-    };
-  };
 }

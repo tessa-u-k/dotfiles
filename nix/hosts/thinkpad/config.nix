@@ -76,7 +76,7 @@
       lutris
       wine64
       protonup-qt
-      wineWowPackages.waylandFull
+      wineWow64Packages.waylandFull
       winetricks
     ];
   };

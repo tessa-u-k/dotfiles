@@ -34,10 +34,11 @@
     element-desktop
     nicotine-plus
     feishin
-    ollama
     newsboat
     temurin-jre-bin
     sdrpp
+    dolphin-emu
+    calibre
 
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
