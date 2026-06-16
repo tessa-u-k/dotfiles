@@ -25,13 +25,11 @@
     "battle-net"
     "wowup"
     "splice"
-    "runelite"
     "orcaslicer"
     "trezor-suite"
     "transmission"
     "tor-browser"
     "little-snitch"
-    "obsidian"
     "discord"
   ];
   

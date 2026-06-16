@@ -2,6 +2,7 @@
 
 {
   home.stateVersion = "26.05";
+  home.enableNixpkgsReleaseCheck = false;
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
@@ -32,13 +33,11 @@
     wireshark 
     brave
     element-desktop
-    nicotine-plus
     feishin
     newsboat
     temurin-jre-bin
     sdrpp
     dolphin-emu
-    calibre
 
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)

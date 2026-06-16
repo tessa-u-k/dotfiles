@@ -78,6 +78,7 @@
       protonup-qt
       wineWow64Packages.waylandFull
       winetricks
+      calibre
     ];
   };
 

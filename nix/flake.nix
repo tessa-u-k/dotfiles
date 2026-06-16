@@ -42,11 +42,8 @@
 
         modules = [
           ./hosts/thinkpad/config.nix
-
           lix-module.nixosModules.default
-
           home-manager.nixosModules.home-manager
-
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
@@ -60,7 +57,6 @@
       darwinConfigurations."pennys-studio" = darwin.lib.darwinSystem {
         modules = [
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
-
           { _module.args.self = self; }
 
           ./hosts/darwin/macbook.nix
