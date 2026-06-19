@@ -31,7 +31,7 @@
     keepassxc
     localsend
     wireshark 
-    brave
+    tor-browser
     element-desktop
     feishin
     newsboat
