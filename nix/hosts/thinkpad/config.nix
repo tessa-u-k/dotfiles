@@ -22,6 +22,7 @@
 
   networking.hostName = "pennyix"; # Define your hostname.
   networking.networkmanager.enable = true;
+  services.printing.enable = true;
 
   time.timeZone = "America/New_York";
 
@@ -79,14 +80,26 @@
       wineWow64Packages.waylandFull
       winetricks
       calibre
+      nzbget
+      firefox-esr
+      pangolin-cli
+      kiwix
+      kiwix-tools
     ];
   };
 
   programs.zsh.enable = true;
+  # Enable Plasma 
+  services.desktopManager.plasma6.enable = true;
 
-  services.displayManager.ly.enable = true;
-  services.desktopManager.gnome.enable = true;
-  services.gnome.games.enable = false;
+    # Default display manager for Plasma
+  services.displayManager.plasma-login-manager.enable = true;
+
+    # Optionally enable xserver
+  services.xserver.enable = true;
+    
+
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -98,7 +111,9 @@
     lshw
     nmap
     os-prober
+    swaylock
   ];
+  programs.steam.enable = true;
   # Make sure fontconfig is enabled
   fonts.fontconfig.enable = true;
 
@@ -124,7 +139,6 @@
   };
   resolved = {
     enable = true; # For caching DNS requests.
-    fallbackDns = [ "" ]; # Overwrite compiled-in fallback DNS servers.
   };
 };
 
