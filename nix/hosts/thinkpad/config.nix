@@ -133,6 +133,7 @@
       kiwix-tools
       unzip
       rpi-imager
+      claude-code
     ];
   };
 

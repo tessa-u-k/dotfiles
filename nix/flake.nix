@@ -62,7 +62,7 @@
         ];
       };
 
-      darwinConfigurations."pennys-studio" = darwin.lib.darwinSystem {
+      darwinConfigurations."cinders-Mac-Mini" = darwin.lib.darwinSystem {
         modules = [
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
           { _module.args.self = self; }

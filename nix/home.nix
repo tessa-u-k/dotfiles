@@ -3,6 +3,7 @@
 {
   home.stateVersion = "26.05";
   home.enableNixpkgsReleaseCheck = false;
+  home.backupFileExtension = ".back";
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
@@ -31,13 +32,11 @@
     keepassxc
     localsend
     wireshark 
-    tor-browser
     element-desktop
     feishin
     newsboat
     temurin-jre-bin
     dolphin-emu
-    claude-code
 
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)

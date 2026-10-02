@@ -33,10 +33,10 @@
     "discord"
   ];
   
-  system.primaryUser = "penny";
+  system.primaryUser = "cinder";
   users.users.penny = {
-    name = "penny";
-    home = "/Users/penny";
+    name = "cinder";
+    home = "/Users/cinder";
     shell = pkgs.zsh;
   };
 
