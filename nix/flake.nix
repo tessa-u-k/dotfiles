@@ -24,6 +24,12 @@
       url = "github:nix-darwin/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Driver for the ThinkPad's Synaptics 06cb:009a fingerprint reader.
+    # Deliberately not following nixpkgs: its python-validity package is
+    # built against the flake's own pinned nixpkgs (unstable isn't supported).
+    nixos-06cb-009a-fingerprint-sensor.url =
+      "github:ahbnr/nixos-06cb-009a-fingerprint-sensor?ref=24.11";
   };
 
   outputs =
@@ -33,6 +39,7 @@
     , darwin
     , lix-module
     , lix
+    , nixos-06cb-009a-fingerprint-sensor
     , ...
     }:
 
@@ -43,6 +50,7 @@
         modules = [
           ./hosts/thinkpad/config.nix
           lix-module.nixosModules.default
+          nixos-06cb-009a-fingerprint-sensor.nixosModules."06cb-009a-fingerprint-sensor"
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

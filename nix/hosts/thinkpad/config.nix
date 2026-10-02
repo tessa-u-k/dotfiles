@@ -19,6 +19,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  programs.nix-ld.enable = false;
 
   networking.hostName = "pennyix"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -49,10 +50,60 @@
   hardware.bluetooth.powerOnBoot = false;
 
 
-  services.tailscale.enable = false;
+  virtualisation.docker.enable = true;  
 
   security.rtkit.enable = true;
-  security.pam.services.login.enableGnomeKeyring = true;
+
+  # Fingerprint reader (Synaptics 06cb:009a) via open-fprintd + python-validity.
+  # Enroll with `fprintd-enroll` after rebuilding.
+  services."06cb-009a-fingerprint-sensor" = {
+    enable = true;
+    backend = "python-validity";
+  };
+
+  security.pam.services = {
+    # plasma-login-manager substacks "login", so this covers the greeter and TTYs.
+    # Note: a fingerprint login can't unlock KWallet (it needs the password).
+    login.fprintAuth = true;
+    sudo.fprintAuth = true;
+    # Lock screen fingerprint; Plasma only defines this when services.fprintd is on.
+    kde-fingerprint.fprintAuth = true;
+  };
+
+  # KWallet is the only Secret Service provider (PAM unlock comes from plasma6).
+  services.gnome.gnome-keyring.enable = false;
+  security.pam.services.login.enableGnomeKeyring = false;
+  # KWallet doesn't ship a D-Bus activation file for the Secret Service name.
+  services.dbus.packages = [
+    (pkgs.writeTextDir "share/dbus-1/services/org.freedesktop.secrets.service" ''
+      [D-BUS Service]
+      Name=org.freedesktop.secrets
+      Exec=${pkgs.kdePackages.kwallet}/bin/ksecretd
+    '')
+  ];
+
+  # SSH keys live in ssh-agent; ksshaskpass (set by plasma6) stores passphrases in KWallet.
+  programs.ssh.startAgent = true;
+  programs.ssh.extraConfig = ''
+    AddKeysToAgent yes
+  '';
+  systemd.user.services.ssh-add-keys = {
+    description = "Load SSH keys into ssh-agent using passphrases from KWallet";
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" "ssh-agent.service" ];
+    requires = [ "ssh-agent.service" ];
+    unitConfig.ConditionPathExists = "%h/.ssh/tess_rsa";
+    environment = {
+      SSH_AUTH_SOCK = "%t/ssh-agent";
+      SSH_ASKPASS = config.programs.ssh.askPassword;
+      SSH_ASKPASS_REQUIRE = "force";
+    };
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${config.programs.ssh.package}/bin/ssh-add %h/.ssh/tess_rsa";
+      StandardInput = "null";
+    };
+  };
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -69,22 +120,19 @@
   users.users.penny = {
     isNormalUser = true;
     description = "penny";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "plugdev" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
       orca-slicer
       qFlipper
-      lutris
-      wine64
-      protonup-qt
-      wineWow64Packages.waylandFull
-      winetricks
       calibre
       nzbget
       firefox-esr
       pangolin-cli
       kiwix
       kiwix-tools
+      unzip
+      rpi-imager
     ];
   };
 
@@ -107,11 +155,11 @@
     neovim
     gnome-tweaks
     wget
-    gnome-keyring
     lshw
     nmap
     os-prober
     swaylock
+    libGL
   ];
   programs.steam.enable = true;
   # Make sure fontconfig is enabled
@@ -148,7 +196,8 @@ networking.nameservers = [ "127.0.0.1" ];
   programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    enableSSHSupport = true;
+    # SSH is handled by ssh-agent + KWallet (see programs.ssh above).
+    enableSSHSupport = false;
   };
 
   # List services that you want to enable:

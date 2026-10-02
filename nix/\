@@ -36,8 +36,8 @@
     feishin
     newsboat
     temurin-jre-bin
+    sdrpp
     dolphin-emu
-    claude-code
 
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
