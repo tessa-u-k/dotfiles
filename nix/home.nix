@@ -1,4 +1,4 @@
-{ config, pkgs, lix, ... }:
+{ config, pkgs, lix, meshterm, ... }:
 
 {
   home.stateVersion = "26.05";
@@ -37,6 +37,7 @@
     newsboat
     temurin-jre-bin
     dolphin-emu
+    (callPackage "${meshterm}/nix/package.nix" { })
 
 
     (if pkgs.stdenv.isDarwin then iterm2 else ghostty)

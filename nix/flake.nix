@@ -30,6 +30,12 @@
     # built against the flake's own pinned nixpkgs (unstable isn't supported).
     nixos-06cb-009a-fingerprint-sensor.url =
       "github:ahbnr/nixos-06cb-009a-fingerprint-sensor?ref=24.11";
+
+    # MeshTerm's repo carries a nixpkgs-shaped package in nix/package.nix.
+    meshterm = {
+      url = "github:tessa-u-k/MeshTerm";
+      flake = false;
+    };
   };
 
   outputs =
@@ -40,6 +46,7 @@
     , lix-module
     , lix
     , nixos-06cb-009a-fingerprint-sensor
+    , meshterm
     , ...
     }:
 
@@ -56,6 +63,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit meshterm; };
 
             home-manager.users.penny = import ./home.nix;
           }
@@ -74,6 +82,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = { inherit meshterm; };
 
             home-manager.users.penny = import ./home.nix;
           }

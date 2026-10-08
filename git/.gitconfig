@@ -23,6 +23,7 @@
 	# Prevent accidental data loss
 	editor = nvim
 	autocrlf = input
+	sshCommand = ssh -o IdentitiesOnly=yes -i ~/.ssh/tess_rsa
 
 [init]
 	defaultBranch = main
