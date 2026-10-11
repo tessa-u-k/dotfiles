@@ -1,7 +1,7 @@
 { config, pkgs, lix, meshterm, ... }:
 
 {
-  home.stateVersion = "26.05";
+  home.stateVersion = "26.11";
   home.enableNixpkgsReleaseCheck = false;
   home.backupFileExtension = ".back";
   programs.home-manager.enable = true;
@@ -38,10 +38,12 @@
     temurin-jre-bin
     dolphin-emu
     (callPackage "${meshterm}/nix/package.nix" { })
+    vscodium
+    discord
 
 
-    (if pkgs.stdenv.isDarwin then iterm2 else ghostty)
-    (if pkgs.stdenv.isDarwin then nvtopPackages.apple else nvtopPackages.full)
+    (if pkgs.stdenv.hostPlatform.isDarwin then iterm2 else ghostty)
+    (if pkgs.stdenv.hostPlatform.isDarwin then nvtopPackages.apple else nvtopPackages.full)
 
 
     # Python with packages
@@ -89,7 +91,7 @@
 
 
   programs.ghostty= {
-    enable = (if pkgs.stdenv.isDarwin then false else true);
+    enable = (if pkgs.stdenv.hostPlatform.isDarwin then false else true);
     package = pkgs.ghostty;
     settings = {
       font-family = "Atkinson Hyperlegible Mono";

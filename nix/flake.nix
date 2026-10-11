@@ -28,8 +28,11 @@
     # Driver for the ThinkPad's Synaptics 06cb:009a fingerprint reader.
     # Deliberately not following nixpkgs: its python-validity package is
     # built against the flake's own pinned nixpkgs (unstable isn't supported).
+    # Local checkout of ahbnr/nixos-06cb-009a-fingerprint-sensor (24.11) with a fix that
+    # restarts python-validity after resume (the sensor re-enumerates on wake).
+    # Run `nix flake update nixos-06cb-009a-fingerprint-sensor` after changing it.
     nixos-06cb-009a-fingerprint-sensor.url =
-      "github:ahbnr/nixos-06cb-009a-fingerprint-sensor?ref=24.11";
+      "path:/home/penny/projs/nixos-06cb-009a-fingerprint-sensor";
 
     # MeshTerm's repo carries a nixpkgs-shaped package in nix/package.nix.
     meshterm = {
