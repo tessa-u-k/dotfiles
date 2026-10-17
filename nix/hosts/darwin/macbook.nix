@@ -1,7 +1,7 @@
 { self, pkgs, lix, ... }:
 {
 
-  nix.package = pkgs.lixPackageSets.stable.lix;
+  nix.package = pkgs.lixPackageSets.lix_2_96.lix; # stable (2.95) fails: nixpkgs passes -Dmimalloc, which 2.95 lacks
   environment.systemPackages = with pkgs; [
     neovim
     coreutils
