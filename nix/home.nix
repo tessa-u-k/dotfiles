@@ -40,7 +40,7 @@
     (callPackage "${meshterm}/nix/package.nix" { })
     vscodium
     discord
-
+    gimp
 
     (if pkgs.stdenv.hostPlatform.isDarwin then iterm2 else ghostty)
     (if pkgs.stdenv.hostPlatform.isDarwin then nvtopPackages.apple else nvtopPackages.full)
