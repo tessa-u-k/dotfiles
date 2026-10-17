@@ -65,7 +65,7 @@ lix() {
   cd "$HOME/dotfiles/nix" || return 1
 
   if command -v darwin-rebuild >/dev/null 2>&1; then
-    sudo darwin-rebuild build || { cd "$original_dir"; return 1; }
+    sudo darwin-rebuild build --flake . || { cd "$original_dir"; return 1; }
     if command -v nix >/dev/null 2>&1; then
       nix store diff-closures /run/current-system ./result || true
     fi
@@ -73,7 +73,7 @@ lix() {
     local resp
     read -r resp
     if [ -z "$resp" ] || [ "$resp" = "y" ] || [ "$resp" = "Y" ]; then
-      sudo darwin-rebuild "$action"
+      sudo darwin-rebuild "$action" --flake .
       # Auto-commit any changes (e.g., flake.lock updates)
       if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
         git add . && git commit -m "Auto-commit after rebuild"

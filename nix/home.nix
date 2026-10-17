@@ -39,8 +39,6 @@
     dolphin-emu
     (callPackage "${meshterm}/nix/package.nix" { })
     vscodium
-    discord
-    gimp
 
     (if pkgs.stdenv.hostPlatform.isDarwin then iterm2 else ghostty)
     (if pkgs.stdenv.hostPlatform.isDarwin then nvtopPackages.apple else nvtopPackages.full)
@@ -50,6 +48,11 @@
     (python313.withPackages (ps: with ps; [
       pip
     ]))
+  ] ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [
+    # discord: on macOS it comes from the Homebrew cask (unfree is disabled there).
+    # gimp: not packaged for darwin.
+    pkgs.discord
+    pkgs.gimp
   ];
 
 
