@@ -107,3 +107,4 @@ lix() {
 
   cd "$original_dir"
 }
+

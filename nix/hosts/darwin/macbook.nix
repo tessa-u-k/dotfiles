@@ -2,6 +2,26 @@
 {
 
   nix.package = pkgs.lixPackageSets.lix_2_96.lix; # stable (2.95) fails: nixpkgs passes -Dmimalloc, which 2.95 lacks
+
+  # pyqt6 6.11 on darwin: QtCore fails to import with "symbol not found
+  # __ZN13QPyTableRange16staticMetaObjectE". The range-model classes are behind
+  # `#if QT_VERSION >= 0x060a00`, which moc seems to evaluate as false here, so
+  # it never emits their meta-objects. Our Qt is >= 6.10, so drop the guard.
+  # Needed for gnuradio's GUI (via pyqtgraph).
+  nixpkgs.overlays = [
+    (final: prev: {
+      pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
+        (pyfinal: pyprev: {
+          pyqt6 = pyprev.pyqt6.overridePythonAttrs (old: {
+            postPatch = (old.postPatch or "") + ''
+              substituteInPlace qpy/QtCore/qpycore_qrangemodel.h qpy/QtCore/qpycore_qrangemodel.cpp \
+                --replace-fail '#if QT_VERSION >= 0x060a00' '#if 1'
+            '';
+          });
+        })
+      ];
+    })
+  ];
   environment.systemPackages = with pkgs; [
     neovim
     coreutils
