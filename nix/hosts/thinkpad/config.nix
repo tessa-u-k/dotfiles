@@ -163,6 +163,13 @@
     libGL
   ];
   programs.steam.enable = true;
+
+  # Run AppImages (e.g. the Jagex Launcher for RuneLite) directly: binfmt
+  # registers them so `./JagexLauncher.AppImage` works without appimage-run.
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
   # Make sure fontconfig is enabled
   fonts.fontconfig.enable = true;
 

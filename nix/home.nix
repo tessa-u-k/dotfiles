@@ -39,17 +39,10 @@
     dolphin-emu
     sdrpp
     gnuradio
-    # The sandbox has no default CA store, which test_basemap_keeps_the_default_tls_context_when_it_works assumes.
-    # stdenv sets NIX_SSL_CERT_FILE=/no-cert-file.crt, and nixpkgs' OpenSSL prefers it over SSL_CERT_FILE.
-    ((callPackage "${meshterm}/nix/package.nix" { }).overridePythonAttrs (old: {
-      preCheck = (old.preCheck or "") + ''
-        export SSL_CERT_FILE=${cacert}/etc/ssl/certs/ca-bundle.crt
-        export NIX_SSL_CERT_FILE=$SSL_CERT_FILE
-      '';
-    }))
     vscodium
     ansible
     esphome
+    thunderbird
 
     (if pkgs.stdenv.hostPlatform.isDarwin then iterm2 else ghostty)
     (if pkgs.stdenv.hostPlatform.isDarwin then nvtopPackages.apple else nvtopPackages.full)
