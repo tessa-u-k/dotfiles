@@ -66,7 +66,7 @@
       recursive = true;
     };
     ".newsboat" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dofiles/newsboat";
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/newsboat";
       recursive = true;
     };
     ".zshrc" = {
@@ -83,9 +83,6 @@
     };
     ".gitconfig" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/git/.gitconfig";
-    };
-    ".news" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/newsboat/.gitconfig";
     };
 
   };
