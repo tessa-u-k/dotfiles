@@ -3,3 +3,5 @@ flake.lock
 result
 nvim/.DS_STORE
 history.txt
+newsboat/cache.db
+newsboat/cache.db.lock
