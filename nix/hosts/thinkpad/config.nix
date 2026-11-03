@@ -50,7 +50,7 @@
   hardware.bluetooth.powerOnBoot = false;
 
 
-  virtualisation.docker.enable = true;  
+  virtualisation.docker.enable = false;  
 
   security.rtkit.enable = true;
 
@@ -70,9 +70,6 @@
     kde-fingerprint.fprintAuth = true;
   };
 
-  # KWallet is the only Secret Service provider (PAM unlock comes from plasma6).
-  services.gnome.gnome-keyring.enable = false;
-  security.pam.services.login.enableGnomeKeyring = false;
   # KWallet doesn't ship a D-Bus activation file for the Secret Service name.
   services.dbus.packages = [
     (pkgs.writeTextDir "share/dbus-1/services/org.freedesktop.secrets.service" ''
@@ -124,13 +121,8 @@
     shell = pkgs.zsh;
     packages = with pkgs; [
       orca-slicer
-      qFlipper
       calibre
-      nzbget
       firefox-esr
-      pangolin-cli
-      kiwix
-      kiwix-tools
       unzip
       rpi-imager
       claude-code
@@ -156,10 +148,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     neovim
-    gnome-tweaks
     wget
     lshw
-    nmap
     os-prober
     swaylock
     libGL
@@ -224,6 +214,6 @@ networking.nameservers = [ "127.0.0.1" ];
   nixpkgs.config.allowUnfree = true;
   nix.settings.sandbox = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  system.stateVersion = "26.05"; # Did you read the comment?
+  system.stateVersion = "26.11"; 
 
 }
