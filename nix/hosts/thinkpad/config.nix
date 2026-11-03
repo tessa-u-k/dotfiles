@@ -128,6 +128,8 @@
       claude-code
       runelite
       bolt-launcher
+      gimp
+      discord
     ];
   };
 

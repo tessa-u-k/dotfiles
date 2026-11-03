@@ -52,11 +52,6 @@
     (python313.withPackages (ps: with ps; [
       pip
     ]))
-  ] ++ pkgs.lib.optionals pkgs.stdenv.hostPlatform.isLinux [
-    # discord: on macOS it comes from the Homebrew cask (unfree is disabled there).
-    # gimp: not packaged for darwin.
-    pkgs.discord
-    pkgs.gimp
   ];
 
 
