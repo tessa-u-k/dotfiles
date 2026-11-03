@@ -16,9 +16,9 @@ Unified Nix flake for both macOS (nix-darwin) and NixOS with shared Home Manager
 ### macOS (nix-darwin)
 ```bash
 # From this directory
-lix switch --flake .#pennys-MacBook-Pro
+lix switch --flake .#cinders-Mac-Mini
 # or, if you want to use the working tree (even if Git is dirty)
-lix switch --flake /Users/penny/dotfiles/nix#pennys-MacBook-Pro
+lix switch --flake /Users/cinder/dotfiles/nix#cinders-Mac-Mini
 ```
 
 ### NixOS
@@ -39,14 +39,14 @@ sudo nixos-rebuild switch --flake .#pennyix
 
 ## Troubleshooting
 - **Git tree dirty or missing files in flake source**:
-  - Commit changes, or use the working tree path: `--flake /Users/penny/dotfiles/nix#host`.
+  - Commit changes, or use the working tree path: `--flake /Users/cinder/dotfiles/nix#host`.
 - **Infinite recursion in Home Manager**:
   - Don’t self-reference `config.home.packages`. Use `lib.mkAfter`/`lib.mkBefore` to extend.
 - **Conflicting binaries in Home Manager buildEnv (e.g., two `pip3`)**:
   - Ensure only one Python environment provides `pip`/`pytest` (prefer a single `python.withPackages`).
 - **Show full evaluation errors**:
   ```bash
-  lix switch --flake .#pennys-MacBook-Pro --show-trace
+  lix switch --flake .#cinders-Mac-Mini --show-trace
   ```
 
 ## Common commands
@@ -55,7 +55,7 @@ sudo nixos-rebuild switch --flake .#pennyix
 nix flake update
 
 # Rebuild macOS
-tlix switch --flake .#pennys-MacBook-Pro
+lix switch --flake .#cinders-Mac-Mini
 
 # Rebuild NixOS
 sudo nixos-rebuild switch --flake .#pennyix
