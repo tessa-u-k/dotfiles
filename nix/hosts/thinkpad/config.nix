@@ -134,6 +134,8 @@
       unzip
       rpi-imager
       claude-code
+      runelite
+      bolt-launcher
     ];
   };
 

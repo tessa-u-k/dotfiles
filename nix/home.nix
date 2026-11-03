@@ -43,8 +43,6 @@
     ansible
     esphome
     thunderbird
-    runelite
-    bolt-launcher
 
     (if pkgs.stdenv.hostPlatform.isDarwin then iterm2 else ghostty)
     (if pkgs.stdenv.hostPlatform.isDarwin then nvtopPackages.apple else nvtopPackages.full)
