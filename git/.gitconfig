@@ -1,7 +1,7 @@
 [user]
 	name = tessa-u-k
 	email = angel@klbr.mom
-	signingkey = 8909C0E2560A59F5
+	signingkey = 94EFE5D85FDC9E6118517351217F310BD7070E66
 
 [alias]
 	# Safe "remove": moves files into <gitdir>/removed/ instead of deleting

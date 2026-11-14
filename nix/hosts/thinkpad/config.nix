@@ -19,6 +19,16 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
 
+  # Unlock the root LUKS volume with a FIDO2 key (YubiKey). Enrol the key
+  # once with:
+  #   sudo systemd-cryptenroll --fido2-device=auto /dev/nvme0n1p2
+  # The passphrase slot stays: without the key plugged in, the prompt falls
+  # back to it after token-timeout.
+  boot.initrd.luks.devices."luks-f770aee4-e041-4300-8c07-cedc2baa51b2".crypttabExtraOpts = [
+    "fido2-device=auto"
+    "token-timeout=15"
+  ];
+
   # Default (LTS) kernel: the legacy NVIDIA driver below lags behind the newest kernels.
 
   hardware.cpu.intel.updateMicrocode = true;
@@ -146,6 +156,10 @@
     # SSH is handled by ssh-agent + KWallet (see programs.ssh above).
     enableSSHSupport = false;
   };
+
+  # Smartcard daemon: gpg (scdaemon) and ykman talk to the YubiKey's OpenPGP
+  # applet through it.
+  services.pcscd.enable = true;
 
   services.pipewire = {
     enable = true;

@@ -35,6 +35,8 @@ in
       btop
       gnumake
       gnupg
+      # ykman: manage the YubiKey's OpenPGP applet (touch policy, PINs, reset).
+      yubikey-manager
       neovim
       prismlauncher
       qbittorrent
@@ -70,6 +72,9 @@ in
     ]
     ++ lib.optionals isLinux [
       nvtopPackages.full
+      # wl-copy/wl-paste: what terminal programs (Claude Code, neovim's "+
+      # register) use to reach the Wayland clipboard.
+      wl-clipboard
     ];
 
   home.file = {
@@ -94,6 +99,12 @@ in
     ".gitconfig" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/git/.gitconfig";
     };
+    # Make gpg's scdaemon reach the YubiKey through PC/SC (pcscd) instead of
+    # its own USB driver; the two fight over the device otherwise, and ykman
+    # needs pcscd.
+    ".gnupg/scdaemon.conf".text = ''
+      disable-ccid
+    '';
 
   };
 
