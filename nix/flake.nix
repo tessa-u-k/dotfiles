@@ -4,17 +4,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    lix = {
-      url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
-      flake = false;
-    };
-
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.lix.follows = "lix";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -32,12 +21,6 @@
     # stops python-validity before sleep (the sensor re-enumerates on wake).
     # Run `nix flake update nixos-06cb-009a-fingerprint-sensor` after changing it.
     nixos-06cb-009a-fingerprint-sensor.url = "github:tessa-u-k/nixos-06cb-009a-fingerprint-sensor/fix-resume-lockscreen-race";
-
-    # MeshTerm's repo carries a nixpkgs-shaped package in nix/package.nix.
-    meshterm = {
-      url = "github:tessa-u-k/MeshTerm";
-      flake = false;
-    };
   };
 
   outputs =
@@ -46,10 +29,7 @@
       nixpkgs,
       home-manager,
       darwin,
-      lix-module,
-      lix,
       nixos-06cb-009a-fingerprint-sensor,
-      meshterm,
       ...
     }:
 
@@ -59,14 +39,12 @@
 
         modules = [
           ./hosts/thinkpad/config.nix
-          lix-module.nixosModules.default
           nixos-06cb-009a-fingerprint-sensor.nixosModules."06cb-009a-fingerprint-sensor"
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit meshterm; };
 
             home-manager.users.penny = import ./home.nix;
           }
@@ -86,7 +64,6 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit meshterm; };
 
             home-manager.users.penny = import ./home.nix;
           }

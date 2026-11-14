@@ -45,17 +45,3 @@ vim.lsp.config('rust_analyzer', {
 -- Enable the language servers
 vim.lsp.enable('gleam')
 vim.lsp.enable('rust_analyzer')
-
--- CMP setup remains the same
-local cmp = require('cmp')
-cmp.setup({
-  sources = {
-    {name = 'nvim_lsp'},
-  },
-  snippet = {
-    expand = function(args)
-      vim.snippet.expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert({}),
-})

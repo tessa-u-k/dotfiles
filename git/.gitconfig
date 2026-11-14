@@ -4,23 +4,27 @@
 	signingkey = 8909C0E2560A59F5
 
 [alias]
-	# Safe "remove" - moves files to .git/removed/ instead of deleting
-	rm = "!f() { \
-		if [ ! -d .git/removed ]; then \
-			mkdir -p .git/removed; \
-		fi; \
+	# Safe "remove": moves files into <gitdir>/removed/ instead of deleting
+	# them, then untracks them. Named `trash` because git ignores aliases
+	# that shadow built-in commands, so an alias called `rm` never runs.
+	trash = "!f() { \
+		cd \"${GIT_PREFIX:-.}\" || return 1; \
+		removed=\"$(git rev-parse --absolute-git-dir)/removed\"; \
+		mkdir -p \"$removed\" || return 1; \
 		for file in \"$@\"; do \
-			if [ -e \"$file\" ]; then \
-				timestamp=$(date +%Y%m%d_%H%M%S); \
-				mv \"$file\" \".git/removed/${file##*/}_${timestamp}\"; \
-				echo \"Moved $file to .git/removed/${file##*/}_${timestamp}\"; \
+			if [ ! -e \"$file\" ] && [ ! -L \"$file\" ]; then \
+				echo \"trash: $file: no such file\" >&2; \
+				continue; \
 			fi; \
+			name=${file%/}; \
+			dest=\"$removed/${name##*/}_$(date +%Y%m%d_%H%M%S)\"; \
+			mv -- \"$file\" \"$dest\" || return 1; \
+			echo \"Moved $file to $dest\"; \
+			git rm -r --cached --quiet --ignore-unmatch -- \"$file\"; \
 		done; \
-		git rm --cached \"$@\"; \
 	}; f"
 
 [core]
-	# Prevent accidental data loss
 	editor = nvim
 	autocrlf = input
 	sshCommand = ssh -o IdentitiesOnly=yes -i ~/.ssh/tess_rsa
@@ -28,9 +32,8 @@
 [init]
 	defaultBranch = main
 
-[pull]
-
 [push]
 	autoSetupRemote = true
+
 [commit]
 	gpgsign = true

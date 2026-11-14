@@ -19,7 +19,7 @@ require("lazy").setup({
   -- Telescope
   {
     'nvim-telescope/telescope.nvim',
-    tag = "0.1.4",
+    tag = "0.1.8",
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
 
@@ -35,6 +35,9 @@ require("lazy").setup({
   -- Treesitter
   {
     'nvim-treesitter/nvim-treesitter',
+    -- The `main` branch is a rewrite without `nvim-treesitter.configs`;
+    -- after/plugin/treesitter.lua needs the old API.
+    branch = "master",
     build = function()
       require('nvim-treesitter.install').update({ with_sync = true })()
     end,

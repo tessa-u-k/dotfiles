@@ -20,6 +20,9 @@ vim.keymap.set('t', 'jk', [[<C-\><C-n>]], { noremap = true })
 -- Open toggleterm on startup and focus back to main window
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
     callback = function()
+        if not require("tess.layout").wanted() then
+            return
+        end
         vim.cmd("ToggleTerm")
         -- Focus back to the main editing window (move right past NvimTree)
         vim.cmd("wincmd k")

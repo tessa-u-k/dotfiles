@@ -12,4 +12,5 @@ vim.keymap.set("v", "<leader>a", "<cmd>CodeCompanionChat Toggle<cr>")
 
 -- Make :q! close everything
 vim.api.nvim_create_user_command('Q', 'qall!', { bang = true })
-vim.cmd('cabbrev q! qall!')
+-- Only when `q!` is the whole command, not inside a search or a longer command.
+vim.cmd([[cnoreabbrev <expr> q! (getcmdtype() ==# ':' && getcmdline() ==# 'q!') ? 'qall!' : 'q!']])

@@ -30,11 +30,16 @@ require("nvim-tree").setup({
         vim.keymap.set('n', 'gy', api.fs.copy.absolute_path, opts('Copy Absolute Path'))
         vim.keymap.set('n', 'q', api.tree.close, opts('Close'))
 
-        vim.api.nvim_buf_set_option(bufnr, 'winbar', '')
+        local win = vim.fn.bufwinid(bufnr)
+        if win ~= -1 then
+            vim.wo[win].winbar = ''
+        end
     end,
 })
 -- Open nvim-tree on startup
 local function open_nvim_tree()
-    require("nvim-tree.api").tree.open()
+    if require("tess.layout").wanted() then
+        require("nvim-tree.api").tree.open()
+    end
 end
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })

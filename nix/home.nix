@@ -38,7 +38,6 @@ in
       neovim
       prismlauncher
       qbittorrent
-      keepassxc
       localsend
       element-desktop
       feishin
@@ -61,7 +60,9 @@ in
     ]
     # On NixOS these come from system modules (programs.ghostty below,
     # programs.wireshark and services.mullvad-vpn in hosts/thinkpad/config.nix).
+    # keepassxc too: its polkit policy is only seen in the system profile.
     ++ lib.optionals isDarwin [
+      keepassxc
       iterm2
       nvtopPackages.apple
       wireshark
@@ -74,11 +75,9 @@ in
   home.file = {
     ".config/nvim" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/nvim";
-      recursive = true;
     };
     ".newsboat" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/newsboat";
-      recursive = true;
     };
     ".zshrc" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/zsh/.zshrc";
@@ -107,8 +106,6 @@ in
     package = pkgs.ghostty;
     settings = {
       font-family = "Atkinson Hyperlegible Mono";
-      macos-icon = "holographic";
-      macos-icon-ghost-color = "#D41919";
       font-size = 20;
       theme = "Black Metal (Dark Funeral)";
     };

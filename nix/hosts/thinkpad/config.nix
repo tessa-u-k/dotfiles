@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -15,6 +20,9 @@
   boot.loader.efi.efiSysMountPoint = "/boot";
 
   # Default (LTS) kernel: the legacy NVIDIA driver below lags behind the newest kernels.
+
+  hardware.cpu.intel.updateMicrocode = true;
+  services.fwupd.enable = true;
 
   networking.hostName = "pennyix";
   networking.networkmanager.enable = true;
@@ -94,6 +102,8 @@
     sudo.fprintAuth = true;
     # Lock screen fingerprint; Plasma only defines this when services.fprintd is on.
     kde-fingerprint.fprintAuth = true;
+    # Polkit prompts (e.g. KeePassXC quick unlock) accept the fingerprint too.
+    polkit-1.fprintAuth = true;
   };
 
   # KWallet doesn't ship a D-Bus activation file for the Secret Service name.
@@ -178,6 +188,10 @@
   # User-level tools (neovim, wget, ...) come from home.nix.
   environment.systemPackages = with pkgs; [
     lshw
+    # Must be in the system profile, not the user one: polkit only reads
+    # actions from /run/current-system/sw/share/polkit-1, and KeePassXC's
+    # quick unlock needs its org.keepassxc.KeePassXC.unlockDatabase action.
+    keepassxc
   ];
 
   programs.steam.enable = true;
@@ -220,8 +234,13 @@
     fallbackDns = [ ];
   };
   networking.nameservers = [ "127.0.0.1" ];
+  # Keep NetworkManager from handing each link's DHCP DNS servers to
+  # systemd-resolved: resolved queries per-link servers alongside the global
+  # one, which sent lookups to the router in the clear.
+  networking.networkmanager.dns = lib.mkForce "none"; # resolved's module sets "systemd-resolved"
 
   nixpkgs.config.allowUnfree = true;
+  nix.package = pkgs.lixPackageSets.lix_2_96.lix; # same Lix as the Mac
   nix.settings.sandbox = true;
   nix.settings.experimental-features = [
     "nix-command"
