@@ -1,59 +1,75 @@
-{ config, pkgs, lix, meshterm, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+
+let
+  inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
+in
 
 {
-  home.stateVersion = "26.11";
+  home.stateVersion = "26.05";
   home.enableNixpkgsReleaseCheck = false;
-  home.backupFileExtension = ".back";
   programs.home-manager.enable = true;
 
-  home.packages = with pkgs; [
-    manga-tui
-    wget
-    curl
-    p7zip
-    tree-sitter
-    zstd
-    gcc
-    git
-    mpv
-    yt-dlp
-    ffmpeg
-    cargo-mommy
-    rustup
-    hyfetch
-    fastfetch
-    btop
-    gnumake
-    gnupg 
-    neovim
-    prismlauncher
-    qbittorrent
-    mullvad
-    keepassxc
-    localsend
-    wireshark 
-    element-desktop
-    feishin
-    newsboat
-    temurin-jre-bin
-    dolphin-emu
-    sdrpp
-    gnuradio
-    vscodium
-    ansible
-    esphome
-    thunderbird
+  home.packages =
+    with pkgs;
+    [
+      manga-tui
+      wget
+      curl
+      p7zip
+      tree-sitter
+      zstd
+      gcc
+      git
+      mpv
+      yt-dlp
+      ffmpeg
+      cargo-mommy
+      rustup
+      hyfetch
+      fastfetch
+      btop
+      gnumake
+      gnupg
+      neovim
+      prismlauncher
+      qbittorrent
+      keepassxc
+      localsend
+      element-desktop
+      feishin
+      newsboat
+      temurin-jre-bin
+      dolphin-emu
+      sdrpp
+      gnuradio
+      vscodium
+      ansible
+      esphome
+      thunderbird
 
-    (if pkgs.stdenv.hostPlatform.isDarwin then iterm2 else ghostty)
-    (if pkgs.stdenv.hostPlatform.isDarwin then nvtopPackages.apple else nvtopPackages.full)
-
-
-    # Python with packages
-    (python313.withPackages (ps: with ps; [
-      pip
-    ]))
-  ];
-
+      # Python with packages
+      (python313.withPackages (
+        ps: with ps; [
+          pip
+        ]
+      ))
+    ]
+    # On NixOS these come from system modules (programs.ghostty below,
+    # programs.wireshark and services.mullvad-vpn in hosts/thinkpad/config.nix).
+    ++ lib.optionals isDarwin [
+      iterm2
+      nvtopPackages.apple
+      wireshark
+      mullvad
+    ]
+    ++ lib.optionals isLinux [
+      nvtopPackages.full
+    ];
 
   home.file = {
     ".config/nvim" = {
@@ -82,15 +98,12 @@
 
   };
 
-
-
   services.syncthing = {
     enable = true;
   };
 
-
-  programs.ghostty= {
-    enable = (if pkgs.stdenv.hostPlatform.isDarwin then false else true);
+  programs.ghostty = {
+    enable = isLinux;
     package = pkgs.ghostty;
     settings = {
       font-family = "Atkinson Hyperlegible Mono";

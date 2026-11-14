@@ -31,8 +31,7 @@
     # Fork of ahbnr/nixos-06cb-009a-fingerprint-sensor (24.11) with a fix that
     # stops python-validity before sleep (the sensor re-enumerates on wake).
     # Run `nix flake update nixos-06cb-009a-fingerprint-sensor` after changing it.
-    nixos-06cb-009a-fingerprint-sensor.url =
-      "github:tessa-u-k/nixos-06cb-009a-fingerprint-sensor/fix-resume-lockscreen-race";
+    nixos-06cb-009a-fingerprint-sensor.url = "github:tessa-u-k/nixos-06cb-009a-fingerprint-sensor/fix-resume-lockscreen-race";
 
     # MeshTerm's repo carries a nixpkgs-shaped package in nix/package.nix.
     meshterm = {
@@ -42,15 +41,16 @@
   };
 
   outputs =
-    { self
-    , nixpkgs
-    , home-manager
-    , darwin
-    , lix-module
-    , lix
-    , nixos-06cb-009a-fingerprint-sensor
-    , meshterm
-    , ...
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      darwin,
+      lix-module,
+      lix,
+      nixos-06cb-009a-fingerprint-sensor,
+      meshterm,
+      ...
     }:
 
     {
@@ -78,18 +78,24 @@
           { nixpkgs.hostPlatform = "aarch64-darwin"; }
           { _module.args.self = self; }
 
-          ./hosts/darwin/macbook.nix
+          ./hosts/darwin/mac-mini.nix
 
           home-manager.darwinModules.home-manager
 
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
             home-manager.extraSpecialArgs = { inherit meshterm; };
 
             home-manager.users.penny = import ./home.nix;
           }
         ];
       };
+
+      # `nix fmt` formats every .nix file in the repo.
+      formatter = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" ] (
+        system: nixpkgs.legacyPackages.${system}.nixfmt-tree
+      );
     };
 }

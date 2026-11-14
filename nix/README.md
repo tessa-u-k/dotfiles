@@ -5,7 +5,8 @@ Unified Nix flake for both macOS (nix-darwin) and NixOS with shared Home Manager
 ## Layout
 - `flake.nix` — single flake exporting `darwinConfigurations` and `nixosConfigurations`.
 - `home.nix` — shared Home Manager config/packages for all hosts.
-- `hosts/` — host-specific NixOS or darwin modules (optional).
+- `hosts/thinkpad/` — NixOS config for the ThinkPad X1 Extreme (`pennyix`).
+- `hosts/darwin/mac-mini.nix` — nix-darwin config for the Mac Mini (`cinders-Mac-Mini`).
 
 ## Requirements
 - Nix with flakes enabled.
@@ -16,9 +17,9 @@ Unified Nix flake for both macOS (nix-darwin) and NixOS with shared Home Manager
 ### macOS (nix-darwin)
 ```bash
 # From this directory
-lix switch --flake .#cinders-Mac-Mini
+sudo darwin-rebuild switch --flake .#cinders-Mac-Mini
 # or, if you want to use the working tree (even if Git is dirty)
-lix switch --flake /Users/cinder/dotfiles/nix#cinders-Mac-Mini
+sudo darwin-rebuild switch --flake /Users/cinder/dotfiles/nix#cinders-Mac-Mini
 ```
 
 ### NixOS
@@ -29,12 +30,12 @@ sudo nixos-rebuild switch --flake .#pennyix
 ## Managing packages
 - **Shared user packages**: add under `home.nix` → `home.packages`.
 - **macOS-only / NixOS-only**: add in per-host HM or system packages:
-  - macOS system packages: in `flake.nix` under `environment.systemPackages` inside the darwin module list.
-  - NixOS system packages: in `nixos/config.nix` under `environment.systemPackages`.
+  - macOS system packages: in `hosts/darwin/mac-mini.nix` under `environment.systemPackages`.
+  - NixOS system packages: in `hosts/thinkpad/config.nix` under `environment.systemPackages`.
 
 ## Homebrew on macOS
 - Homebrew is enabled to manage GUI apps (`homebrew.casks`).
-- To go pure-Nix, set `homebrew.enable = false;` in `flake.nix` and replace casks with Nix packages where possible.
+- To go pure-Nix, set `homebrew.enable = false;` in `hosts/darwin/mac-mini.nix` and replace casks with Nix packages where possible.
 - Note: Enabling Homebrew pulls in a Ruby runtime (expected).
 
 ## Troubleshooting
@@ -46,7 +47,7 @@ sudo nixos-rebuild switch --flake .#pennyix
   - Ensure only one Python environment provides `pip`/`pytest` (prefer a single `python.withPackages`).
 - **Show full evaluation errors**:
   ```bash
-  lix switch --flake .#cinders-Mac-Mini --show-trace
+  sudo darwin-rebuild switch --flake .#cinders-Mac-Mini --show-trace
   ```
 
 ## Common commands
@@ -54,8 +55,11 @@ sudo nixos-rebuild switch --flake .#pennyix
 # Update flake inputs
 nix flake update
 
+# Format all .nix files
+nix fmt
+
 # Rebuild macOS
-lix switch --flake .#cinders-Mac-Mini
+sudo darwin-rebuild switch --flake .#cinders-Mac-Mini
 
 # Rebuild NixOS
 sudo nixos-rebuild switch --flake .#pennyix
