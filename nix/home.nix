@@ -12,9 +12,36 @@ let
   # Vendor .dmg releases repackaged for macOS; see pkgs/mac-apps.nix.
   macApps = pkgs.callPackage ./pkgs/mac-apps.nix { };
 
+  # The words mommy uses, for cargo-mommy and claude-mommy alike. Each is a
+  # slash-separated list ("girl/pup"); one entry is picked at random per
+  # message. A CARGO_MOMMYS_* variable set in the shell still overrides these.
+  mommy = {
+    little = "cow"; # what mommy calls you
+    pronouns = "her"; # mommy's pronoun, possessive: "her little girl"
+    roles = "mommy"; # who mommy is
+    emotes = "❤️/💖/💗/💓/💞"; # what ends each message
+    # Your own pronoun, subject form (she/he/they/it): "it's such a good cow".
+    # claude-mommy only; cargo-mommy has no setting for it.
+    littlePronouns = "it";
+  };
+
   # cargo-mommy for Claude Code: a hook command and an output style; see
   # pkgs/claude-mommy.nix.
-  claudeMommy = pkgs.callPackage ./pkgs/claude-mommy.nix { };
+  claudeMommy = pkgs.callPackage ./pkgs/claude-mommy.nix mommy;
+
+  # cargo-mommy with the same words as its defaults.
+  cargoMommy = pkgs.symlinkJoin {
+    name = "cargo-mommy";
+    paths = [ pkgs.cargo-mommy ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/cargo-mommy \
+        --set-default CARGO_MOMMYS_LITTLE ${lib.escapeShellArg mommy.little} \
+        --set-default CARGO_MOMMYS_PRONOUNS ${lib.escapeShellArg mommy.pronouns} \
+        --set-default CARGO_MOMMYS_ROLES ${lib.escapeShellArg mommy.roles} \
+        --set-default CARGO_MOMMYS_EMOTES ${lib.escapeShellArg mommy.emotes}
+    '';
+  };
 in
 
 {
@@ -36,7 +63,7 @@ in
       mpv
       yt-dlp
       ffmpeg
-      cargo-mommy
+      cargoMommy
       claudeMommy # the same, for Claude Code
       rustup
       hyfetch

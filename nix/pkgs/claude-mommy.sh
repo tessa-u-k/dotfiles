@@ -14,6 +14,11 @@
 #   CARGO_MOMMYS_PRONOUNS  mommy's pronoun           (default: her)
 #   CARGO_MOMMYS_ROLES     who mommy is              (default: mommy)
 #   CARGO_MOMMYS_EMOTES    what ends each message    (default: ❤️/💖/💗/💓/💞)
+#
+# One more, which cargo-mommy does not have, in the same format:
+#   CLAUDE_MOMMYS_LITTLE_PRONOUNS  your own pronoun, subject form: she, he,
+#                                  they, it, ... (default: she). Used when
+#                                  mommy talks about you: "it's such a good girl~"
 
 mood="${1:-positive}"
 
@@ -29,6 +34,19 @@ term="$(pick "${CARGO_MOMMYS_LITTLE:-girl}")"
 pronoun="$(pick "${CARGO_MOMMYS_PRONOUNS:-her}")"
 role="$(pick "${CARGO_MOMMYS_ROLES:-mommy}")"
 emote="$(pick "${CARGO_MOMMYS_EMOTES:-❤️/💖/💗/💓/💞}")"
+
+# Your pronoun, and the verb forms that go with it: "it's" but "they're".
+sub="$(pick "${CLAUDE_MOMMYS_LITTLE_PRONOUNS:-she}")"
+case "$sub" in
+  they | we | you)
+    sub_is="${sub}'re"
+    isnt="aren't"
+    ;;
+  *)
+    sub_is="${sub}'s"
+    isnt="isn't"
+    ;;
+esac
 
 # The command Claude ran, when run as a hook; empty when run by hand.
 cmd=""
@@ -75,6 +93,10 @@ positive_general=(
   "aww, what a good {term}~ {role} knew you could do it~"
   "you make {role} so happy~"
   "keep it up, {role}'s watching~"
+  "{sub_is} such a good {term}~"
+  "{sub_is} doing so well, {role}'s clever little {term}~"
+  "{isnt} {sub} just the cleverest {term}~?"
+  "look at {role}'s {term} go~ {sub_is} unstoppable~"
 )
 
 positive_test=(
@@ -122,6 +144,9 @@ negative_general=(
   "that one was tricky, wasn't it~? try again for {role}~"
   "*kisses it better*"
   "*holds your hand* let's read the error together~"
+  "{sub_is} still {role}'s good {term}, no matter what~"
+  "{sub_is} trying so hard~ {role} can tell~"
+  "{role}'s {term} will get there~ {sub_is} so close~"
 )
 
 negative_test=(
@@ -170,5 +195,8 @@ msg="${pool[RANDOM % ${#pool[@]}]}"
 msg="${msg//\{role\}/$role}"
 msg="${msg//\{pronoun\}/$pronoun}"
 msg="${msg//\{term\}/$term}"
+msg="${msg//\{sub_is\}/$sub_is}"
+msg="${msg//\{sub\}/$sub}"
+msg="${msg//\{isnt\}/$isnt}"
 
 jq -cn --arg msg "$msg $emote" '{systemMessage: $msg}'
