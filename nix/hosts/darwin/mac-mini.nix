@@ -67,6 +67,14 @@
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  # Thunderbird's external-GnuPG support (needed for the YubiKey) dlopens
+  # libgpgme.dylib, but only searches its own app folder, /usr/local/lib,
+  # /opt/local/lib and /opt/homebrew/lib -- never the Nix profile.
+  system.activationScripts.postActivation.text = ''
+    mkdir -p /usr/local/lib
+    ln -sfn ${pkgs.gpgme}/lib/libgpgme.dylib /usr/local/lib/libgpgme.dylib
+  '';
+
   # Unfree packages stay blocked, except the ones named here.
   nixpkgs.config.allowUnfree = false;
   nixpkgs.config.allowUnfreePredicate =
