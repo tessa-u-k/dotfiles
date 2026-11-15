@@ -11,6 +11,10 @@ let
 
   # Vendor .dmg releases repackaged for macOS; see pkgs/mac-apps.nix.
   macApps = pkgs.callPackage ./pkgs/mac-apps.nix { };
+
+  # cargo-mommy for Claude Code: a hook command and an output style; see
+  # pkgs/claude-mommy.nix.
+  claudeMommy = pkgs.callPackage ./pkgs/claude-mommy.nix { };
 in
 
 {
@@ -33,7 +37,7 @@ in
       yt-dlp
       ffmpeg
       cargo-mommy
-      (callPackage ./pkgs/claude-mommy.nix { }) # the same, for Claude Code's Bash tool
+      claudeMommy # the same, for Claude Code
       rustup
       hyfetch
       fastfetch
@@ -121,6 +125,13 @@ in
     ".gnupg/scdaemon.conf".text = ''
       disable-ccid
     '';
+    # The output style that makes Claude Code talk as mommy. It is switched on
+    # by "outputStyle": "Mommy" in ~/.claude/settings.json, which Nix does not
+    # manage. force: replace the hand-written copy this one took over from.
+    ".claude/output-styles/mommy.md" = {
+      source = "${claudeMommy}/share/claude-mommy/output-styles/mommy.md";
+      force = true;
+    };
 
   };
 
