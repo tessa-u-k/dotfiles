@@ -35,12 +35,12 @@ require("lazy").setup({
   -- Treesitter
   {
     'nvim-treesitter/nvim-treesitter',
-    -- The `main` branch is a rewrite without `nvim-treesitter.configs`;
-    -- after/plugin/treesitter.lua needs the old API.
-    branch = "master",
-    build = function()
-      require('nvim-treesitter.install').update({ with_sync = true })()
-    end,
+    -- `main` is the maintained rewrite (the frozen `master` branch breaks on
+    -- Neovim 0.12). It does not support lazy-loading; parsers are compiled
+    -- with the `tree-sitter` CLI (see nix/home.nix).
+    branch = "main",
+    lazy = false,
+    build = ":TSUpdate",
   },
 
   -- Nvim Tree
