@@ -71,6 +71,9 @@ in
       btop
       gnumake
       gnupg
+      # ssh, ssh-add, ssh-keygen with FIDO (-sk key) support built in. Apple's
+      # /usr/bin/ssh has none: "Cannot load FIDO key ... without provider".
+      openssh
       # ykman: manage the YubiKey's OpenPGP applet (touch policy, PINs, reset).
       yubikey-manager
       neovim
