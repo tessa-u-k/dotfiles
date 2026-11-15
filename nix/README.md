@@ -34,8 +34,9 @@ sudo nixos-rebuild switch --flake .#pennyix
   - NixOS system packages: in `hosts/thinkpad/config.nix` under `environment.systemPackages`.
 
 ## Homebrew on macOS
-- Homebrew is enabled to manage GUI apps (`homebrew.casks`).
-- To go pure-Nix, set `homebrew.enable = false;` in `hosts/darwin/mac-mini.nix` and replace casks with Nix packages where possible.
+- Homebrew manages only the GUI apps that ship as installers (`homebrew.casks` in `hosts/darwin/mac-mini.nix`); everything else is a Nix package in `home.nix`.
+- Apps nixpkgs lacks for `aarch64-darwin` but that ship as a plain `.app` in a `.dmg` are repackaged in `pkgs/mac-apps.nix`; version bumps there are manual (instructions at the top of the file).
+- Before adding a cask, check nixpkgs first, then whether the app fits `pkgs/mac-apps.nix`.
 - Note: Enabling Homebrew pulls in a Ruby runtime (expected).
 
 ## Troubleshooting

@@ -23,13 +23,11 @@ require("lazy").setup({
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
 
-  -- Rose Pine colorscheme
+  -- Rose Pine colorscheme (fallback: `:lua ColorMyPencils("rose-pine")`;
+  -- the default is colors/evangelion.lua, set in after/plugin/colors.lua)
   {
     "rose-pine/neovim",
     name = "rose-pine",
-    config = function()
-      vim.cmd('colorscheme rose-pine')
-    end
   },
 
   -- Treesitter
@@ -104,6 +102,33 @@ require("lazy").setup({
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' }
-  }
+  },
+
+  -- Popup showing the available keybinds after a prefix (e.g. <leader>)
+  'folke/which-key.nvim',
+
+  -- Git signs in the gutter, hunk staging/preview/blame
+  'lewis6991/gitsigns.nvim',
+
+  -- Add/change/delete surrounding quotes, brackets and tags
+  { 'kylechui/nvim-surround', version = "*" },
+
+  -- Auto-close brackets and quotes
+  'windwp/nvim-autopairs',
+
+  -- Indent guides
+  { 'lukas-reineke/indent-blankline.nvim', main = "ibl" },
+
+  -- Highlight and search TODO/FIXME/NOTE comments
+  {
+    'folke/todo-comments.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+  },
+
+  -- Diagnostics / quickfix / references list
+  'folke/trouble.nvim',
+
+  -- Visual undo history (pairs with the persistent undofile in init.lua)
+  'mbbill/undotree',
 }
 )

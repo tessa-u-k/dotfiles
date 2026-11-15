@@ -2,11 +2,15 @@
   config,
   lib,
   pkgs,
+  meshterm, # flake input, passed in through extraSpecialArgs in flake.nix
   ...
 }:
 
 let
   inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
+
+  # Vendor .dmg releases repackaged for macOS; see pkgs/mac-apps.nix.
+  macApps = pkgs.callPackage ./pkgs/mac-apps.nix { };
 in
 
 {
@@ -29,6 +33,7 @@ in
       yt-dlp
       ffmpeg
       cargo-mommy
+      (callPackage ./pkgs/claude-mommy.nix { }) # the same, for Claude Code's Bash tool
       rustup
       hyfetch
       fastfetch
@@ -52,6 +57,7 @@ in
       ansible
       esphome
       thunderbird
+      meshterm.packages.${pkgs.stdenv.hostPlatform.system}.default
 
       # Python with packages
       (python313.withPackages (
@@ -69,6 +75,13 @@ in
       nvtopPackages.apple
       wireshark
       mullvad
+      discord # unfree: allowed by name in hosts/darwin/mac-mini.nix
+      transmission_4-mac # the native Transmission.app
+      macApps.obs-studio
+      macApps.zen-browser
+      macApps.orca-slicer
+      macApps.tor-browser
+      macApps.trezor-suite # unfree: allowed by name in hosts/darwin/mac-mini.nix
     ]
     ++ lib.optionals isLinux [
       nvtopPackages.full
@@ -98,6 +111,9 @@ in
     };
     ".gitconfig" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/git/.gitconfig";
+    };
+    ".ssh/config" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dotfiles/ssh/config";
     };
     # Make gpg's scdaemon reach the YubiKey through PC/SC (pcscd) instead of
     # its own USB driver; the two fight over the device otherwise, and ykman

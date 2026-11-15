@@ -125,35 +125,19 @@
     '')
   ];
 
-  # SSH keys live in ssh-agent; ksshaskpass (set by plasma6) stores passphrases in KWallet.
+  # SSH keys live in ssh-agent; the passphrase is asked for in the terminal on
+  # first use and the key stays loaded for the rest of the session.
   programs.ssh.startAgent = true;
   programs.ssh.extraConfig = ''
     AddKeysToAgent yes
   '';
-  systemd.user.services.ssh-add-keys = {
-    description = "Load SSH keys into ssh-agent using passphrases from KWallet";
-    wantedBy = [ "graphical-session.target" ];
-    after = [
-      "graphical-session.target"
-      "ssh-agent.service"
-    ];
-    requires = [ "ssh-agent.service" ];
-    unitConfig.ConditionPathExists = "%h/.ssh/tess_rsa";
-    environment = {
-      SSH_AUTH_SOCK = "%t/ssh-agent";
-      SSH_ASKPASS = config.programs.ssh.askPassword;
-      SSH_ASKPASS_REQUIRE = "force";
-    };
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${config.programs.ssh.package}/bin/ssh-add %h/.ssh/tess_rsa";
-      StandardInput = "null";
-    };
-  };
+  # No graphical askpass: plasma6 would otherwise set SSH_ASKPASS to ksshaskpass.
+  programs.ssh.enableAskPassword = false;
+  environment.plasma6.excludePackages = [ pkgs.kdePackages.ksshaskpass ];
 
   programs.gnupg.agent = {
     enable = true;
-    # SSH is handled by ssh-agent + KWallet (see programs.ssh above).
+    # SSH is handled by ssh-agent (see programs.ssh above).
     enableSSHSupport = false;
   };
 
@@ -189,6 +173,8 @@
       bolt-launcher
       gimp
       discord
+      # Binary Ninja Personal, built from the licensed installer.
+      (pkgs.callPackage ../../pkgs/binary-ninja.nix { })
     ];
   };
 

@@ -1,4 +1,9 @@
-{ self, pkgs, ... }:
+{
+  self,
+  lib,
+  pkgs,
+  ...
+}:
 {
 
   nix.package = pkgs.lixPackageSets.lix_2_96.lix; # stable (2.95) fails: nixpkgs passes -Dmimalloc, which 2.95 lacks
@@ -34,22 +39,17 @@
     atkinson-monolegible
   ];
 
+  # Homebrew only for the apps that can't be nix packages: they ship as
+  # installers rather than a plain .app. Everything else comes from nixpkgs or
+  # from pkgs/mac-apps.nix (see home.nix).
   homebrew.enable = true;
   homebrew.onActivation.cleanup = "uninstall";
   homebrew.onActivation.upgrade = true;
   homebrew.greedyCasks = true;
   homebrew.casks = [
-    "obs"
-    "zen"
     "battle-net"
     "wowup"
     "splice"
-    "orcaslicer"
-    "trezor-suite"
-    "transmission"
-    "tor-browser"
-    "little-snitch"
-    "discord"
   ];
 
   system.primaryUser = "cinder";
@@ -61,7 +61,14 @@
 
   security.pam.services.sudo_local.touchIdAuth = true;
 
+  # Unfree packages stay blocked, except the ones named here.
   nixpkgs.config.allowUnfree = false;
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    builtins.elem (lib.getName pkg) [
+      "discord"
+      "trezor-suite"
+    ];
   nix.settings = {
     experimental-features = [
       "nix-command"
