@@ -91,7 +91,14 @@ in
       ansible
       esphome
       thunderbird
-      meshterm.packages.${pkgs.stdenv.hostPlatform.system}.default
+      # One test expects Python's default CA store to hold certificates. In a
+      # Nix build it is empty, and on the Mac (sandbox off) the app then falls
+      # back to /etc/ssl/cert.pem, which the test counts as a failure.
+      (meshterm.packages.${pkgs.stdenv.hostPlatform.system}.default.overridePythonAttrs (old: {
+        disabledTests = (old.disabledTests or [ ]) ++ [
+          "test_basemap_keeps_the_default_tls_context_when_it_works"
+        ];
+      }))
 
       # Python with packages
       (python313.withPackages (

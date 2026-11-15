@@ -47,7 +47,13 @@
   homebrew.onActivation.upgrade = true;
   homebrew.greedyCasks = true;
   homebrew.casks = [
-    "battle-net"
+    # Not greedy: Battle.net updates itself, and its cask is a manual
+    # installer that brew cannot upgrade. A greedy upgrade fails, which fails
+    # `brew bundle` and stops activation before home-manager runs.
+    {
+      name = "battle-net";
+      greedy = false;
+    }
     "wowup"
     "splice"
   ];
