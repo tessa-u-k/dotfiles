@@ -14,6 +14,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Per-model hardware quirks; used for the Framework 16.
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Driver for the ThinkPad's Synaptics 06cb:009a fingerprint reader.
     # Deliberately not following nixpkgs: its python-validity package is
     # built against the flake's own pinned nixpkgs (unstable isn't supported).
@@ -45,6 +51,7 @@
       nixpkgs,
       home-manager,
       darwin,
+      nixos-hardware,
       nixos-06cb-009a-fingerprint-sensor,
       meshterm,
       binaryninja,
@@ -59,6 +66,24 @@
           ./hosts/thinkpad/config.nix
           nixos-06cb-009a-fingerprint-sensor.nixosModules."06cb-009a-fingerprint-sensor"
           { nixpkgs.overlays = [ binaryninja.overlays.default ]; } # pkgs.binary-ninja
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.backupFileExtension = "backup";
+            home-manager.extraSpecialArgs = { inherit meshterm; };
+
+            home-manager.users.penny = import ./home.nix;
+          }
+        ];
+      };
+
+      nixosConfigurations.framework = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+
+        modules = [
+          ./hosts/framework/config.nix
+          nixos-hardware.nixosModules.framework-16-7040-amd
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

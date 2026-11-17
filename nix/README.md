@@ -5,7 +5,9 @@ Unified Nix flake for both macOS (nix-darwin) and NixOS with shared Home Manager
 ## Layout
 - `flake.nix` — single flake exporting `darwinConfigurations` and `nixosConfigurations`.
 - `home.nix` — shared Home Manager config/packages for all hosts.
+- `hosts/common.nix` — NixOS settings shared by every NixOS host.
 - `hosts/thinkpad/` — NixOS config for the ThinkPad X1 Extreme (`pennyix`).
+- `hosts/framework/` — NixOS config for the Framework Laptop 16 (`framework`).
 - `hosts/darwin/mac-mini.nix` — nix-darwin config for the Mac Mini (`cinders-Mac-Mini`).
 
 ## Requirements
@@ -24,14 +26,15 @@ sudo darwin-rebuild switch --flake /Users/cinder/dotfiles/nix#cinders-Mac-Mini
 
 ### NixOS
 ```bash
-sudo nixos-rebuild switch --flake .#pennyix
+sudo nixos-rebuild switch --flake .#pennyix    # ThinkPad
+sudo nixos-rebuild switch --flake .#framework  # Framework 16
 ```
 
 ## Managing packages
 - **Shared user packages**: add under `home.nix` → `home.packages`.
 - **macOS-only / NixOS-only**: add in per-host HM or system packages:
   - macOS system packages: in `hosts/darwin/mac-mini.nix` under `environment.systemPackages`.
-  - NixOS system packages: in `hosts/thinkpad/config.nix` under `environment.systemPackages`.
+  - NixOS system packages: in `hosts/common.nix` under `environment.systemPackages` (all NixOS hosts), or in a host's `config.nix`.
 
 ## Homebrew on macOS
 - Homebrew manages only the GUI apps that ship as installers (`homebrew.casks` in `hosts/darwin/mac-mini.nix`); everything else is a Nix package in `home.nix`.
