@@ -1,0 +1,10 @@
+# Linked to ~/.ssh/config by nix/home.nix.
+
+Host *
+  # Listing any IdentityFile turns off the default names (id_ed25519_sk is
+  # one), so every key is named here. Missing files are skipped silently.
+  # The -sk keys are FIDO keys: they need an ssh built with FIDO support
+  # (nixpkgs' openssh, not Apple's /usr/bin/ssh) and a touch on every use.
+  IdentityFile ~/.ssh/id_ed25519_sk
+  IdentityFile ~/.ssh/id_ed25519_sk_5c
+  IdentityFile ~/.ssh/tess_rsa

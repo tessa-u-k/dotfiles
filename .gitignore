@@ -3,3 +3,4 @@ result
 history.txt
 newsboat/cache.db
 newsboat/cache.db.lock
+*.swp
