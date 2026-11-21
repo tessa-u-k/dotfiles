@@ -1,5 +1,14 @@
 # Linked to ~/.ssh/config by nix/home.nix.
 
+# Must come before `Host *`: ssh uses the first value it finds for each option.
+# IdentityFile adds up across blocks instead, so github.com is also offered
+# the keys listed under `Host *`; IdentitiesOnly keeps the agent's other keys out.
+Host github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_sk_5c
+  IdentityFile ~/.ssh/id_ed25519_sk
+  IdentitiesOnly yes
+
 Host *
   # Listing any IdentityFile turns off the default names (id_ed25519_sk is
   # one), so every key is named here. Missing files are skipped silently.

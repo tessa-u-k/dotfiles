@@ -82,6 +82,7 @@ in
       localsend
       element-desktop
       feishin
+      dnd-tools
       newsboat
       temurin-jre-bin
       dolphin-emu
@@ -90,7 +91,9 @@ in
       vscodium
       ansible
       esphome
+      wrangler # Cloudflare Workers CLI
       thunderbird
+      signal-desktop
       # One test expects Python's default CA store to hold certificates. In a
       # Nix build it is empty, and on the Mac (sandbox off) the app then falls
       # back to /etc/ssl/cert.pem, which the test counts as a failure.

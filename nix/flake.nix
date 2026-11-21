@@ -84,6 +84,7 @@
         modules = [
           ./hosts/framework/config.nix
           nixos-hardware.nixosModules.framework-16-7040-amd
+          { nixpkgs.overlays = [ binaryninja.overlays.default ]; } # pkgs.binary-ninja
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
