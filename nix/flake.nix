@@ -133,6 +133,15 @@
         self.nixosConfigurations.pennyix.pkgs.callPackage ./pkgs/binary-ninja.nix
           { };
 
+      # `nix build .#wrangler`: the newer wrangler home.nix installs (used when
+      # bumping pkgs/wrangler.nix to get the new hashes).
+      packages.x86_64-linux.wrangler =
+        nixpkgs.legacyPackages.x86_64-linux.callPackage ./pkgs/wrangler.nix
+          { };
+      packages.aarch64-darwin.wrangler =
+        nixpkgs.legacyPackages.aarch64-darwin.callPackage ./pkgs/wrangler.nix
+          { };
+
       # `nix fmt` formats every .nix file in the repo.
       formatter = nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-darwin" ] (
         system: nixpkgs.legacyPackages.${system}.nixfmt-tree

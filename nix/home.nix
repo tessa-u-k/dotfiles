@@ -71,6 +71,7 @@ in
       btop
       gnumake
       gnupg
+      trezor-suite
       # ssh, ssh-add, ssh-keygen with FIDO (-sk key) support built in. Apple's
       # /usr/bin/ssh has none: "Cannot load FIDO key ... without provider".
       openssh
@@ -91,7 +92,8 @@ in
       vscodium
       ansible
       esphome
-      wrangler # Cloudflare Workers CLI
+      # Cloudflare Workers CLI, newer than nixpkgs has (see pkgs/wrangler.nix).
+      (pkgs.callPackage ./pkgs/wrangler.nix { })
       thunderbird
       signal-desktop
       # One test expects Python's default CA store to hold certificates. In a
@@ -111,7 +113,7 @@ in
       ))
     ]
     # On NixOS these come from system modules (programs.ghostty below,
-    # programs.wireshark and services.mullvad-vpn in hosts/thinkpad/config.nix).
+    # programs.wireshark and services.mullvad-vpn in hosts/common.nix).
     # keepassxc too: its polkit policy is only seen in the system profile.
     ++ lib.optionals isDarwin [
       keepassxc
