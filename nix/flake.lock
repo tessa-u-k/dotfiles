@@ -21,6 +21,22 @@
         "type": "github"
       }
     },
+    "claude-mommy-abdl": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1795592104,
+        "narHash": "sha256-5Gc7GnTg2EX8zUeKKMDbQtp8Yn9+RU+WnCwOIVpWrJM=",
+        "ref": "refs/heads/main",
+        "rev": "eb9ae1d1918a7aa5a3ee6640e2041284fbe4e09c",
+        "revCount": 2,
+        "type": "git",
+        "url": "ssh://git@git.klbr.mom/tessa-u-k/claude-mommy-abdl"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@git.klbr.mom/tessa-u-k/claude-mommy-abdl"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -87,11 +103,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794723014,
-        "narHash": "sha256-vMW5+phgmYOnByi5HJn+Oafr7bvc/NPLptD+PpzHD9s=",
+        "lastModified": 1795591179,
+        "narHash": "sha256-s6Ni3AvMwrflHPb88JeKME5SG7we4OpXOWL1TbWnz7w=",
         "owner": "tessa-u-k",
         "repo": "MeshTerm",
-        "rev": "b4be37f50068fea2f78d4113e427e08dc64a5e90",
+        "rev": "c156bcf56c04859f131577a08766f0ae5cc5d075",
         "type": "github"
       },
       "original": {
@@ -174,6 +190,7 @@
     "root": {
       "inputs": {
         "binaryninja": "binaryninja",
+        "claude-mommy-abdl": "claude-mommy-abdl",
         "darwin": "darwin",
         "home-manager": "home-manager",
         "meshterm": "meshterm",

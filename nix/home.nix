@@ -3,6 +3,7 @@
   lib,
   pkgs,
   meshterm, # flake input, passed in through extraSpecialArgs in flake.nix
+  claude-mommy-abdl, # flake input (source only), passed in the same way
   ...
 }:
 
@@ -25,9 +26,19 @@ let
     littlePronouns = "it";
   };
 
-  # cargo-mommy for Claude Code: a hook command and an output style; see
-  # pkgs/claude-mommy.nix.
-  claudeMommy = pkgs.callPackage ./pkgs/claude-mommy.nix mommy;
+  # cargo-mommy for Claude Code: a hook command and an output style. Built
+  # from the private fork (the claude-mommy-abdl input in flake.nix), whose
+  # package.nix lists every argument. wetChance and messChance are the
+  # percentages of hook messages that tell you to wet and to mess, 0 to 100
+  # each. The fork takes the place of pkgs/claude-mommy.nix: same command,
+  # same output style path.
+  claudeMommy = pkgs.callPackage "${claude-mommy-abdl}/package.nix" (
+    mommy
+    // {
+      wetChance = 35;
+      messChance = 15;
+    }
+  );
 
   # cargo-mommy with the same words as its defaults.
   cargoMommy = pkgs.symlinkJoin {

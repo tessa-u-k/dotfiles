@@ -36,6 +36,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # The private ABDL fork of claude-mommy (home.nix builds its package.nix
+    # with the words set there). Not a flake input in the usual sense: only
+    # the source is used. Fetched over SSH, so locking or updating it needs
+    # your key. Run `nix flake update claude-mommy-abdl` to pick up new commits.
+    claude-mommy-abdl = {
+      url = "git+ssh://git@git.klbr.mom/tessa-u-k/claude-mommy-abdl";
+      flake = false;
+    };
+
     # Packages the paid Binary Ninja editions from an installer zip you add to
     # the Nix store yourself (see pkgs/binary-ninja.nix).
     # Run `nix flake update binaryninja` to pick up new Binary Ninja releases.
@@ -54,6 +63,7 @@
       nixos-hardware,
       nixos-06cb-009a-fingerprint-sensor,
       meshterm,
+      claude-mommy-abdl,
       binaryninja,
       ...
     }:
@@ -71,7 +81,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit meshterm; };
+            home-manager.extraSpecialArgs = { inherit meshterm claude-mommy-abdl; };
 
             home-manager.users.penny = import ./home.nix;
           }
@@ -90,7 +100,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit meshterm; };
+            home-manager.extraSpecialArgs = { inherit meshterm claude-mommy-abdl; };
 
             home-manager.users.penny = import ./home.nix;
           }
@@ -110,7 +120,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.backupFileExtension = "backup";
-            home-manager.extraSpecialArgs = { inherit meshterm; };
+            home-manager.extraSpecialArgs = { inherit meshterm claude-mommy-abdl; };
 
             home-manager.users.penny = import ./home.nix;
           }

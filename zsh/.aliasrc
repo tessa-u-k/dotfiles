@@ -4,3 +4,5 @@ alias vim="nvim"
 alias cargo="cargo mommy"
 alias wkey="gpg --armor --export E2BAD13B52C74AD5ECDD9D69479A4326C3C23B04"
 zim() { docker run -v ~/wiki:/output ghcr.io/openzim/zimit zimit --seeds "$1" --name "$2" --diskUtilization 95; }
+# `claude mommy ...` runs plain `claude ...` (aliases can't contain spaces, so this is a function)
+claude() { [[ "$1" == mommy ]] && shift; command claude "$@"; }
