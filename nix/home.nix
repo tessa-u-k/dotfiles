@@ -60,6 +60,7 @@ in
       zstd
       gcc
       git
+      gh
       mpv
       yt-dlp
       ffmpeg
@@ -94,6 +95,10 @@ in
       esphome
       # Cloudflare Workers CLI, newer than nixpkgs has (see pkgs/wrangler.nix).
       (pkgs.callPackage ./pkgs/wrangler.nix { })
+      # MCP server that lets Claude Code work with a Forgejo instance (issues,
+      # pull requests, files). Registered per user with `claude mcp add`, not
+      # by Nix: it needs the instance URL and an access token.
+      forgejo-mcp
       thunderbird
       signal-desktop
       # One test expects Python's default CA store to hold certificates. In a
